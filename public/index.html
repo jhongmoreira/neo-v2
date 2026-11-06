@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Telas do template · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+
+  <!-- INTEGRAÇÃO: <style>:root{--brand:{{ primary_color }};--brand-secondary:{{ secondary_color }}}</style> -->
+</head>
+
+<body>
+  <main class="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-12 sm:px-6">
+    <div class="flex flex-col gap-3">
+      <img src="assets/img/logo-white.png" alt="IADocs" class="h-12 w-auto self-start brightness-0">
+      <h1 class="font-heading text-3xl font-semibold tracking-tight">Telas do novo template</h1>
+      <p class="max-w-2xl text-slate-500">Interface em HTML + Tailwind CSS para substituir as views do app-mvp. Cada tela tem comentários <code class="rounded bg-slate-100 px-1.5 py-0.5 text-sm text-slate-700">INTEGRAÇÃO:</code> indicando o que trocar no Blade.</p>
+    </div>
+      <section class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="icon-chip size-9"><span class="icon-[lucide--log-in] size-4" aria-hidden="true"></span></span>
+          <h2 class="section-title">Acesso</h2>
+          <span class="badge-neutral">4</span>
+        </div>
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <li>
+            <a href="login.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Login</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Entrar com usuário e senha ou Google</span>
+            </a>
+          </li>
+          <li>
+            <a href="forgot-password.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Recuperar senha / primeiro acesso</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Envio do link por e-mail</span>
+            </a>
+          </li>
+          <li>
+            <a href="reset-password.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Criar nova senha</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Link recebido por e-mail</span>
+            </a>
+          </li>
+          <li>
+            <a href="force-password.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Troca obrigatória de senha</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Primeiro login com senha provisória</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="icon-chip size-9"><span class="icon-[lucide--graduation-cap] size-4" aria-hidden="true"></span></span>
+          <h2 class="section-title">Aluno</h2>
+          <span class="badge-neutral">10</span>
+        </div>
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <li>
+            <a href="student-home.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Início</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Destaque do prazo, indicadores, tutoriais e avisos</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-area.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Meu Espaço</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Temas, redações e redações da turma</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-subject.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Tema</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Proposta e escolha do tipo de texto</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-editor.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Editor de redação</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Assistente, revisão, leituras e imagem anexada</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-editor.html?conflict=1" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Editor · conflito de rascunho</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Escolha entre versão salva e rascunho</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-transcription.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Transcrição por foto</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Envio, processamento e revisão</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-history.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Histórico de versões</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Visualizar e restaurar versões</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-project.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Redação entregue</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Nota, feedback, competências e comentários</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-class-project.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Redação de um colega</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Leitura e contribuições</span>
+            </a>
+          </li>
+          <li>
+            <a href="student-profile.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Meu perfil</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Foto, dados e troca de senha</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="icon-chip size-9"><span class="icon-[lucide--triangle-alert] size-4" aria-hidden="true"></span></span>
+          <h2 class="section-title">Páginas de sistema</h2>
+          <span class="badge-neutral">4</span>
+        </div>
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <li>
+            <a href="404.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Página não encontrada</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Erro 404</span>
+            </a>
+          </li>
+          <li>
+            <a href="403.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Sem permissão</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Erro 403</span>
+            </a>
+          </li>
+          <li>
+            <a href="500.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Erro interno</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Erro 500</span>
+            </a>
+          </li>
+          <li>
+            <a href="maintenance.html" class="card-link h-full gap-1 p-5">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-medium">Manutenção</span>
+                <span class="icon-[lucide--arrow-up-right] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+              </span>
+              <span class="text-sm text-slate-500">Plataforma indisponível</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+  </main>
+</body>
+</html>

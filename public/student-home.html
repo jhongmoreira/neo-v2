@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Início · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+
+<body>
+  <!-- ============================================================
+       CABEÇALHO (na integração vira o layout Blade do aluno)
+       ============================================================ -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-5xl items-center gap-6 px-4 sm:px-6">
+      <!-- INTEGRAÇÃO: route('home') + logo do tenant -->
+      <a href="student-home.html" class="shrink-0">
+        <img src="assets/img/logo-white.png" alt="IADocs" class="h-9 w-auto brightness-0">
+      </a>
+
+      <nav aria-label="Principal" class="hidden items-center gap-1 md:flex">
+        <a href="student-home.html" class="nav-link" aria-current="page">Início</a>
+        <!-- INTEGRAÇÃO: route('student.area') -->
+        <a href="student-area.html" class="nav-link">Meu Espaço</a>
+      </nav>
+
+      <div class="relative ml-auto" data-dropdown>
+        <button type="button" data-dropdown-trigger aria-expanded="false" aria-haspopup="menu" aria-label="Sua conta"
+          class="flex items-center gap-3 rounded-full py-1 pr-1 pl-1 transition hover:bg-slate-100 sm:pl-4">
+          <span class="hidden text-right sm:block">
+            <span class="block text-sm leading-tight font-medium">Maria Souza</span>
+            <span class="block text-xs leading-tight text-slate-500">Aluno</span>
+          </span>
+          <!-- INTEGRAÇÃO: avatar do usuário, se houver -->
+          <span class="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">MS</span>
+        </button>
+
+        <div data-dropdown-menu role="menu"
+          class="absolute right-0 z-40 mt-2 hidden w-60 rounded-2xl bg-white p-1.5 shadow-lg ring-1 ring-slate-900/5">
+          <div class="px-3 pt-2 pb-3">
+            <p class="truncate text-sm font-medium">Maria Souza</p>
+            <p class="truncate text-xs text-slate-500">maria.souza@escola.com.br</p>
+          </div>
+          <div class="my-1 h-px bg-slate-100"></div>
+          <!-- INTEGRAÇÃO: route('profile') -->
+          <a href="student-profile.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--user-round] size-4 text-slate-400" aria-hidden="true"></span>Meu perfil
+          </a>
+          <!-- INTEGRAÇÃO: route('logout') -->
+          <a href="login.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--log-out] size-4 text-slate-400" aria-hidden="true"></span>Sair da conta
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTEÚDO
+       ============================================================ -->
+  <main class="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 sm:px-6 md:py-10">
+
+    <!-- Saudação
+         INTEGRAÇÃO: Auth::user()->name · $openProjects · $sendedProjects -->
+    <div class="flex flex-col gap-1">
+      <h1 class="font-heading text-2xl font-semibold tracking-tight">Olá, Maria</h1>
+      <p class="text-sm text-slate-500">Você tem 3 redações pendentes e 12 entregues.</p>
+    </div>
+
+    <!-- Destaque: redação pendente com o prazo mais próximo
+         INTEGRAÇÃO: ocultar quando não houver redação pendente -->
+    <section class="relative flex flex-col gap-5 overflow-hidden rounded-3xl bg-primary p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-7">
+      <div aria-hidden="true"
+        class="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,color-mix(in_oklab,var(--accent)_70%,transparent),transparent_50%)]"></div>
+      <div class="relative flex min-w-0 items-start gap-4">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-white/15">
+          <span class="icon-[lucide--pen-line] size-5" aria-hidden="true"></span>
+        </span>
+        <div class="flex min-w-0 flex-col gap-1">
+          <span class="text-xs font-medium tracking-wide text-white/70 uppercase">Prazo mais próximo</span>
+          <span class="font-heading text-lg leading-snug font-semibold">Caminhos para combater a desinformação nas redes</span>
+          <span class="flex flex-wrap items-center gap-2 text-sm text-white/75">
+            Atividade 5 · Língua Portuguesa
+            <span class="badge bg-warning text-[oklch(0.3_0.08_55)]">
+              <span class="icon-[lucide--clock] size-3" aria-hidden="true"></span>Encerra em 3 dias
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- INTEGRAÇÃO: /projects/{id} -->
+      <a href="student-editor.html" class="btn relative bg-white text-primary hover:bg-white/90 focus-visible:ring-white/40 sm:shrink-0">
+        <span class="icon-[lucide--pencil] size-4" aria-hidden="true"></span>
+        Continuar escrevendo
+      </a>
+    </section>
+
+    <!-- Indicadores -->
+    <section class="grid grid-cols-2 gap-4 lg:grid-cols-4" aria-label="Resumo">
+      <!-- INTEGRAÇÃO: route('student.area') · $institution->getNamings()->subjects -->
+      <a href="student-area.html?tab=subjects" class="card-link gap-4 p-5">
+        <span class="icon-chip"><span class="icon-[lucide--book-open-text] size-5" aria-hidden="true"></span></span>
+        <div>
+          <p class="text-sm text-slate-500">Temas</p>
+          <p class="font-heading text-3xl font-semibold tracking-tight">8</p>
+        </div>
+      </a>
+      <!-- INTEGRAÇÃO: route('student.area', ['tab' => 'projects-tab']) · getNamings()->projects -->
+      <a href="student-area.html?tab=projects" class="card-link gap-4 p-5">
+        <span class="icon-chip"><span class="icon-[lucide--file-text] size-5" aria-hidden="true"></span></span>
+        <div>
+          <p class="text-sm text-slate-500">Redações</p>
+          <p class="font-heading text-3xl font-semibold tracking-tight">15</p>
+        </div>
+      </a>
+      <div class="card gap-4 p-5">
+        <span class="icon-chip"><span class="icon-[lucide--message-square-heart] size-5" aria-hidden="true"></span></span>
+        <div>
+          <p class="text-sm text-slate-500">Contribuições</p>
+          <p class="font-heading text-3xl font-semibold tracking-tight">4</p>
+        </div>
+      </div>
+      <!-- INTEGRAÇÃO: conteúdo do diálogo vem de route('tutorials.show') -->
+      <button type="button" class="card-link gap-4 p-5 text-left" data-open-dialog="tutorials-dialog">
+        <span class="icon-chip"><span class="icon-[lucide--circle-play] size-5" aria-hidden="true"></span></span>
+        <div>
+          <p class="text-sm text-slate-500">Tutoriais</p>
+          <p class="font-heading text-3xl font-semibold tracking-tight">6</p>
+        </div>
+      </button>
+    </section>
+
+    <!-- Continue de onde parou
+         INTEGRAÇÃO: @foreach($projectList as $project) · ocultar a seção se a lista estiver vazia -->
+    <section class="flex flex-col gap-3">
+      <div class="flex items-baseline justify-between gap-3">
+        <h2 class="section-title">Continue de onde parou</h2>
+        <a href="student-area.html?tab=projects" class="link text-sm">Ver todas</a>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2" data-project-list>
+        <article class="card gap-4" data-project-id="1">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex min-w-0 flex-col gap-1">
+              <h3 class="font-heading text-base leading-snug font-semibold">A persistência da violência contra a mulher no Brasil</h3>
+              <span class="text-xs text-slate-500">Dissertativo-argumentativo</span>
+            </div>
+            <span class="badge-warning"><span class="badge-dot"></span>Em andamento</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Simulado ENEM 2026 · 3º bimestre</div>
+            <div class="meta"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Até 20/11/2026</div>
+          </dl>
+          <div class="mt-auto flex items-center gap-2 pt-2">
+            <!-- INTEGRAÇÃO: send_date == null ? '/projects/{id}' : '/project-contribution/{id}' -->
+            <a href="student-editor.html" class="btn-primary flex-1">
+              <span class="icon-[lucide--pencil] size-4" aria-hidden="true"></span>Continuar escrevendo
+            </a>
+            <!-- INTEGRAÇÃO: exibir só quando send_date == null -->
+            <button type="button" data-delete-project class="btn-icon hover:bg-danger/10 hover:text-danger" aria-label="Excluir redação">
+              <span class="icon-[lucide--trash-2] size-4" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <article class="card gap-4" data-project-id="2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex min-w-0 flex-col gap-1">
+              <h3 class="font-heading text-base leading-snug font-semibold">Crise hídrica e consumo consciente</h3>
+              <span class="text-xs text-slate-500">Texto dissertativo</span>
+            </div>
+            <span class="badge-warning"><span class="badge-dot"></span>Em andamento</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Ciências da Natureza · Projeto água</div>
+            <div class="meta"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Até 05/12/2026</div>
+          </dl>
+          <div class="mt-auto flex items-center gap-2 pt-2">
+            <a href="student-editor.html" class="btn-primary flex-1">
+              <span class="icon-[lucide--pencil] size-4" aria-hidden="true"></span>Continuar escrevendo
+            </a>
+            <button type="button" data-delete-project class="btn-icon hover:bg-danger/10 hover:text-danger" aria-label="Excluir redação">
+              <span class="icon-[lucide--trash-2] size-4" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <div class="empty-state hidden" data-project-empty>
+        <span class="icon-chip"><span class="icon-[lucide--file-check-2] size-5" aria-hidden="true"></span></span>
+        <p class="font-heading font-semibold">Tudo em dia</p>
+        <p class="text-sm text-slate-500">Nenhuma redação em andamento no momento.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Navegação inferior (celular) -->
+  <div class="h-[calc(4rem+env(safe-area-inset-bottom))] md:hidden"></div>
+  <nav aria-label="Principal" class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
+    <div class="grid h-16 grid-cols-2">
+      <a href="student-home.html" class="bottom-nav-link" aria-current="page">
+        <span class="icon-[lucide--house] size-5" aria-hidden="true"></span>Início
+      </a>
+      <a href="student-area.html" class="bottom-nav-link">
+        <span class="icon-[lucide--book-open] size-5" aria-hidden="true"></span>Meu Espaço
+      </a>
+    </div>
+  </nav>
+
+  <!-- Confirmação de exclusão -->
+  <dialog id="delete-dialog"
+    class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-3xl bg-white p-6 text-slate-900 shadow-xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/30 backdrop:backdrop-blur-xs">
+    <span class="flex size-10 items-center justify-center rounded-full bg-danger/10 text-danger">
+      <span class="icon-[lucide--trash-2] size-5" aria-hidden="true"></span>
+    </span>
+    <h2 class="mt-4 font-heading text-lg font-semibold">Excluir redação?</h2>
+    <p class="mt-1 text-sm text-slate-500">Essa ação não pode ser desfeita.</p>
+    <form method="dialog" class="mt-6 flex justify-end gap-2">
+      <button value="cancel" class="btn-outline">Cancelar</button>
+      <!-- INTEGRAÇÃO: POST /student/deleteProject { id } -->
+      <button value="confirm" class="btn-danger">Excluir</button>
+    </form>
+  </dialog>
+
+  <!-- Tutoriais
+       INTEGRAÇÃO: @forelse ($tutorials as $tutorial) · @empty → "Nenhum tutorial disponível." -->
+  <dialog id="tutorials-dialog" data-dismissible aria-labelledby="tutorials-title"
+    class="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-lg rounded-3xl bg-white p-0 text-slate-900 shadow-xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/30 backdrop:backdrop-blur-xs open:flex open:flex-col">
+    <div class="flex items-center gap-3 border-b border-slate-100 px-6 py-4">
+      <span class="icon-chip size-9"><span class="icon-[lucide--graduation-cap] size-4" aria-hidden="true"></span></span>
+      <h2 id="tutorials-title" class="flex-1 font-heading text-lg font-semibold">Tutoriais</h2>
+      <form method="dialog"><button class="btn-icon" aria-label="Fechar"><span class="icon-[lucide--x] size-5" aria-hidden="true"></span></button></form>
+    </div>
+    <ul class="flex flex-col overflow-y-auto p-3">
+      <li>
+        <!-- INTEGRAÇÃO: href="{{ $tutorial->url }}" -->
+        <a href="#" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-slate-50">
+          <span class="icon-chip size-10"><span class="icon-[lucide--circle-play] size-4" aria-hidden="true"></span></span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-medium">Primeiros passos na plataforma</span>
+            <span class="text-xs text-slate-500">Vídeo · 3 min</span>
+          </span>
+          <span class="icon-[lucide--external-link] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <!-- INTEGRAÇÃO: href="{{ $tutorial->url }}" -->
+        <a href="#" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-slate-50">
+          <span class="icon-chip size-10"><span class="icon-[lucide--circle-play] size-4" aria-hidden="true"></span></span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-medium">Como iniciar uma redação</span>
+            <span class="text-xs text-slate-500">Vídeo · 2 min</span>
+          </span>
+          <span class="icon-[lucide--external-link] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <!-- INTEGRAÇÃO: href="{{ $tutorial->url }}" -->
+        <a href="#" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-slate-50">
+          <span class="icon-chip size-10"><span class="icon-[lucide--circle-play] size-4" aria-hidden="true"></span></span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-medium">Usando o Assistente e a Revisão</span>
+            <span class="text-xs text-slate-500">Vídeo · 4 min</span>
+          </span>
+          <span class="icon-[lucide--external-link] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <!-- INTEGRAÇÃO: href="{{ $tutorial->url }}" -->
+        <a href="#" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-slate-50">
+          <span class="icon-chip size-10"><span class="icon-[lucide--circle-play] size-4" aria-hidden="true"></span></span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-medium">Transcrevendo uma redação manuscrita</span>
+            <span class="text-xs text-slate-500">Vídeo · 2 min</span>
+          </span>
+          <span class="icon-[lucide--external-link] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <!-- INTEGRAÇÃO: href="{{ $tutorial->url }}" -->
+        <a href="#" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-slate-50">
+          <span class="icon-chip size-10"><span class="icon-[lucide--file-text] size-4" aria-hidden="true"></span></span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-medium">Entendendo a correção por competências</span>
+            <span class="text-xs text-slate-500">Guia em PDF</span>
+          </span>
+          <span class="icon-[lucide--external-link] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <!-- INTEGRAÇÃO: href="{{ $tutorial->url }}" -->
+        <a href="#" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-slate-50">
+          <span class="icon-chip size-10"><span class="icon-[lucide--file-text] size-4" aria-hidden="true"></span></span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-medium">Comentando a redação dos colegas</span>
+            <span class="text-xs text-slate-500">Guia em PDF</span>
+          </span>
+          <span class="icon-[lucide--external-link] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+        </a>
+      </li>
+    </ul>
+  </dialog>
+
+  <!-- Avisos da instituição (exibidos uma vez por sessão, em sequência)
+       INTEGRAÇÃO: GET route('announcements.pending') → um <template> por aviso
+       Tipos: texto (HTML do Quill), imagem ou vídeo (iframe) -->
+  <dialog data-announcements aria-labelledby="announcement-title"
+    class="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl rounded-3xl bg-white p-0 text-slate-900 shadow-xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/30 backdrop:backdrop-blur-xs open:flex open:flex-col">
+    <div class="flex items-center gap-3 border-b border-slate-100 px-6 py-4">
+      <span class="icon-chip size-9"><span class="icon-[lucide--megaphone] size-4" aria-hidden="true"></span></span>
+      <div class="min-w-0 flex-1">
+        <p class="text-xs font-medium tracking-wide text-slate-500 uppercase">Aviso <span data-announcement-counter></span></p>
+        <h2 id="announcement-title" class="truncate font-heading text-lg font-semibold" data-announcement-title></h2>
+      </div>
+    </div>
+    <div class="overflow-y-auto px-6 py-5" data-announcement-body></div>
+    <form method="dialog" class="flex justify-end border-t border-slate-100 px-6 py-4">
+      <button class="btn-primary">Entendi, não exibir novamente</button>
+    </form>
+
+    <template data-announcement data-title="Simulado ENEM: nova data de entrega">
+      <div class="rich-text">
+        <p>O prazo do <strong>Simulado ENEM 2026 · 3º bimestre</strong> foi estendido até <strong>20/11</strong>.</p>
+        <p>Aproveite o tempo extra para usar o Assistente e revisar sua redação antes de finalizar.</p>
+      </div>
+    </template>
+    <template data-announcement data-title="Novidade: transcrição por foto">
+      <div class="flex flex-col gap-4">
+        <img src="assets/img/sample-handwritten.svg" alt="" class="max-h-56 w-full rounded-2xl object-cover object-top">
+        <p class="text-sm leading-6 text-slate-600">Agora você pode escrever à mão, tirar uma foto da folha e transformar em texto direto no editor. Procure o botão <strong class="font-medium text-slate-900">Transcrever</strong>.</p>
+      </div>
+    </template>
+  </dialog>
+
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/project-delete.js" defer></script>
+</body>
+</html>

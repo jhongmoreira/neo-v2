@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mobilidade urbana e qualidade de vida · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+
+<body>
+  <!-- ============================================================
+       CABEÇALHO (igual às demais telas do aluno; na integração vira layout Blade)
+       ============================================================ -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4 sm:px-6">
+      <a href="student-home.html" class="shrink-0">
+        <img src="assets/img/logo-white.png" alt="IADocs" class="h-9 w-auto brightness-0">
+      </a>
+
+      <nav aria-label="Principal" class="hidden items-center gap-1 md:flex">
+        <a href="student-home.html" class="nav-link">Início</a>
+        <a href="student-area.html" class="nav-link" aria-current="page">Meu Espaço</a>
+      </nav>
+
+      <div class="relative ml-auto" data-dropdown>
+        <button type="button" data-dropdown-trigger aria-expanded="false" aria-haspopup="menu" aria-label="Sua conta"
+          class="flex items-center gap-3 rounded-full py-1 pr-1 pl-1 transition hover:bg-slate-100 sm:pl-4">
+          <span class="hidden text-right sm:block">
+            <span class="block text-sm leading-tight font-medium">Maria Souza</span>
+            <span class="block text-xs leading-tight text-slate-500">Aluno</span>
+          </span>
+          <span class="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">MS</span>
+        </button>
+
+        <div data-dropdown-menu role="menu"
+          class="absolute right-0 z-40 mt-2 hidden w-60 rounded-2xl bg-white p-1.5 shadow-lg ring-1 ring-slate-900/5">
+          <div class="px-3 pt-2 pb-3">
+            <p class="truncate text-sm font-medium">Maria Souza</p>
+            <p class="truncate text-xs text-slate-500">maria.souza@escola.com.br</p>
+          </div>
+          <div class="my-1 h-px bg-slate-100"></div>
+          <a href="student-profile.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--user-round] size-4 text-slate-400" aria-hidden="true"></span>Meu perfil
+          </a>
+          <a href="login.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--log-out] size-4 text-slate-400" aria-hidden="true"></span>Sair da conta
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTEÚDO
+       ============================================================ -->
+  <main class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6 md:py-10">
+
+    <!-- Cabeçalho da redação -->
+    <div class="flex flex-col gap-4">
+      <a href="student-area.html?tab=projects" class="flex w-fit items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-slate-900">
+        <span class="icon-[lucide--arrow-left] size-4" aria-hidden="true"></span>Minhas redações
+      </a>
+
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="badge-success"><span class="badge-dot"></span>Entregue</span>
+          <span class="text-sm text-slate-500">em 12/06/2026</span>
+        </div>
+        <!-- INTEGRAÇÃO: $project->projectText->title -->
+        <h1 class="font-heading text-2xl font-semibold tracking-tight text-balance sm:text-3xl">Mobilidade urbana e qualidade de vida</h1>
+        <div class="flex flex-wrap gap-x-5 gap-y-2">
+          <!-- INTEGRAÇÃO: $project->subject->name → página do tema -->
+          <a href="student-subject.html" class="meta hover:text-slate-900">
+            <span class="icon-[lucide--book-open-text] size-4 shrink-0" aria-hidden="true"></span>Simulado ENEM 2026 · 1º bimestre
+          </a>
+          <span class="meta"><span class="icon-[lucide--tag] size-4 shrink-0" aria-hidden="true"></span>Dissertativo-argumentativo</span>
+          <!-- INTEGRAÇÃO: $project->person->name -->
+          <span class="meta"><span class="icon-[lucide--user-round] size-4 shrink-0" aria-hidden="true"></span>Maria Souza</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultado da correção
+         INTEGRAÇÃO: @if ($isOwner && $projectCorrection) · grade com vírgula · feedback do professor -->
+    <section class="relative flex flex-col gap-5 overflow-hidden rounded-3xl bg-primary p-6 text-white sm:flex-row sm:items-center sm:gap-8 sm:p-8" aria-label="Resultado da correção">
+      <div aria-hidden="true"
+        class="absolute inset-0 bg-[radial-gradient(circle_at_95%_0%,color-mix(in_oklab,var(--accent)_70%,transparent),transparent_50%)]"></div>
+      <div class="relative flex shrink-0 flex-col">
+        <span class="text-xs font-medium tracking-wide text-white/70 uppercase">Nota</span>
+        <span class="font-heading text-5xl leading-none font-semibold">8,5</span>
+      </div>
+      <div class="relative hidden h-16 w-px bg-white/20 sm:block" aria-hidden="true"></div>
+      <div class="relative flex min-w-0 flex-col gap-2">
+        <span class="text-xs font-medium tracking-wide text-white/70 uppercase">Feedback do professor</span>
+        <p class="leading-7 text-white/90">
+          Texto bem estruturado e com boa progressão entre os parágrafos. Para a próxima, detalhe melhor a proposta de
+          intervenção: diga quem deve agir, como e com qual finalidade.
+        </p>
+      </div>
+    </section>
+
+    <!-- INTEGRAÇÃO: @if ($isOwner && $correctionInProgress) — exibir no lugar do bloco acima:
+    <section class="flex items-start gap-3 rounded-3xl bg-slate-50 p-5 ring-1 ring-slate-900/5">
+      <span class="icon-chip"><span class="icon-[lucide--hourglass] size-5" aria-hidden="true"></span></span>
+      <div>
+        <p class="font-heading font-semibold">Correção em andamento</p>
+        <p class="mt-1 text-sm text-slate-500">A nota e o feedback aparecem aqui assim que a correção for finalizada.</p>
+      </div>
+    </section>
+    -->
+
+    <div class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:grid-rows-[auto_1fr]">
+
+        <!-- Texto da redação
+             INTEGRAÇÃO: {!! $project->projectText->text !!} -->
+        <article class="card min-w-0 gap-6 sm:p-10 lg:col-start-1" aria-label="Texto da redação">
+          <div class="rich-text text-base leading-8 text-slate-800">
+            <p>O direito de ir e vir, garantido pela Constituição, depende de condições concretas para ser exercido. Nas grandes cidades brasileiras, no entanto, longas horas no trânsito, transporte coletivo lotado e calçadas mal conservadas mostram que a mobilidade urbana ainda é um obstáculo à qualidade de vida da população.</p>
+            <p>Em primeiro lugar, o modelo de crescimento das cidades priorizou o automóvel. Avenidas foram ampliadas enquanto o transporte público recebeu investimentos insuficientes, o que empurrou quem pode pagar para o carro e deixou quem não pode refém de um sistema lento e caro.</p>
+            <p>Além disso, a distância entre moradia e trabalho agrava o problema. Muitas famílias vivem nas periferias por causa do custo da habitação e enfrentam deslocamentos diários que consomem tempo de descanso, estudo e convivência.</p>
+            <p>Portanto, é necessário que o poder público municipal amplie a rede de transporte coletivo e de ciclovias, por meio de investimentos planejados com a participação da comunidade, a fim de reduzir o tempo de deslocamento e tornar a cidade mais acessível para todos.</p>
+          </div>
+
+          <div class="flex flex-wrap gap-2 border-t border-slate-100 pt-5">
+            <!-- INTEGRAÇÃO: /projects/{id}/history -->
+            <a href="student-history.html" class="btn-outline h-9 px-4"><span class="icon-[lucide--history] size-4" aria-hidden="true"></span>Histórico</a>
+            <!-- INTEGRAÇÃO: só se houver imagem de transcrição (ocrImages) -->
+            <button type="button" class="btn-outline h-9 px-4" data-image-viewer="assets/img/sample-handwritten.svg" data-caption="Redação manuscrita"><span class="icon-[lucide--image] size-4" aria-hidden="true"></span>Imagem</button>
+          </div>
+        </article>
+
+      <!-- ============================================================
+           ANÁLISE DA ESCRITA (ENEM) — no celular fica entre o texto e os comentários
+           INTEGRAÇÃO: writing-analisys-enem-project · cor da barra conforme *_score_color
+           (>= 80% verde · >= 50% amarelo · abaixo vermelho)
+           ============================================================ -->
+      <aside class="card gap-5 p-5 lg:sticky lg:top-24 lg:col-start-2 lg:row-span-2 lg:row-start-1" aria-labelledby="analysis-title">
+        <div class="flex items-center gap-3">
+          <span class="icon-chip"><span class="icon-[lucide--chart-no-axes-column] size-5" aria-hidden="true"></span></span>
+          <h2 id="analysis-title" class="section-title text-base">Análise da escrita</h2>
+        </div>
+
+        <!-- Nota final -->
+        <div class="flex items-center gap-4 rounded-2xl bg-slate-50 p-4">
+          <div class="relative size-20 shrink-0">
+            <svg class="size-20 -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="42" fill="none" stroke-width="10" class="stroke-slate-200" />
+              <!-- dashoffset = 263.9 × (1 − nota/1000) -->
+              <circle cx="50" cy="50" r="42" fill="none" stroke-width="10" stroke-linecap="round" class="stroke-success"
+                stroke-dasharray="263.9" stroke-dashoffset="42.2" />
+            </svg>
+            <span class="absolute inset-0 flex items-center justify-center font-heading text-lg font-semibold">840</span>
+          </div>
+          <div class="flex min-w-0 flex-col gap-1">
+            <span class="text-sm font-medium">Nota final</span>
+            <span class="text-xs text-slate-500">de 1000 pontos</span>
+            <button type="button" class="link w-fit text-sm" data-open-analysis>Ver comentário</button>
+          </div>
+        </div>
+
+        <!-- Competências -->
+        <ul class="flex flex-col gap-4">
+          <li class="flex flex-col gap-1.5">
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="text-sm font-medium">Competência 1</span>
+              <span class="text-sm font-semibold text-success">160<span class="font-normal text-slate-400">/200</span></span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[80%] rounded-full bg-success"></div></div>
+            <p class="text-xs leading-5 text-slate-500">Modalidade escrita formal da Língua Portuguesa</p>
+          </li>
+          <li class="flex flex-col gap-1.5">
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="text-sm font-medium">Competência 2</span>
+              <span class="text-sm font-semibold text-success">200<span class="font-normal text-slate-400">/200</span></span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-full rounded-full bg-success"></div></div>
+            <p class="text-xs leading-5 text-slate-500">Compreensão da proposta e aplicação da estrutura dissertativo-argumentativa</p>
+          </li>
+          <li class="flex flex-col gap-1.5">
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="text-sm font-medium">Competência 3</span>
+              <span class="text-sm font-semibold text-success">160<span class="font-normal text-slate-400">/200</span></span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[80%] rounded-full bg-success"></div></div>
+            <p class="text-xs leading-5 text-slate-500">Seleção, relação e organização de argumentos para defender o ponto de vista</p>
+          </li>
+          <li class="flex flex-col gap-1.5">
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="text-sm font-medium">Competência 4</span>
+              <span class="text-sm font-semibold text-success">180<span class="font-normal text-slate-400">/200</span></span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[90%] rounded-full bg-success"></div></div>
+            <p class="text-xs leading-5 text-slate-500">Mecanismos linguísticos para argumentar</p>
+          </li>
+          <li class="flex flex-col gap-1.5">
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="text-sm font-medium">Competência 5</span>
+              <span class="text-sm font-semibold text-warning-foreground">140<span class="font-normal text-slate-400">/200</span></span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[70%] rounded-full bg-warning"></div></div>
+            <p class="text-xs leading-5 text-slate-500">Proposta de intervenção para o problema</p>
+          </li>
+        </ul>
+
+        <!-- INTEGRAÇÃO: asset($writingAnalisys['complete_comments']) -->
+        <a href="#" target="_blank" rel="noopener" class="btn-outline w-full">
+          <span class="icon-[lucide--file-down] size-4" aria-hidden="true"></span>Baixar análise em PDF
+        </a>
+      </aside>
+
+        <!-- Comentários e curtidas
+             INTEGRAÇÃO: project-contribution-form (route('project-contribution.save'), route('project-contribution.reaction')) -->
+        <section class="card min-w-0 gap-5 lg:col-start-1" aria-labelledby="comments-title">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 id="comments-title" class="section-title">Comentários</h2>
+            <div class="flex items-center gap-1">
+              <button type="button" class="btn h-9 px-3 text-slate-600 hover:bg-slate-100 aria-pressed:bg-danger/10 aria-pressed:text-danger" data-like aria-pressed="false" aria-label="Curtir">
+                <span class="icon-[lucide--heart] size-4" data-like-icon aria-hidden="true"></span>
+                <span data-like-count>3</span>
+              </button>
+              <span class="flex items-center gap-1.5 px-3 text-sm text-slate-600">
+                <span class="icon-[lucide--message-circle] size-4" aria-hidden="true"></span>
+                <span data-comment-count>2</span>
+              </span>
+            </div>
+          </div>
+
+          <ul class="flex flex-col gap-5" data-comment-list>
+            <li class="flex gap-3">
+              <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">AL</span>
+              <div class="min-w-0 flex-1">
+                <p class="text-sm"><span class="font-medium">Prof. Ana Lima</span> <span class="text-slate-400">· 14/06/2026 10:32</span></p>
+                <p class="mt-1 text-sm leading-6 text-slate-600">Ótimo uso de dados do cotidiano no segundo parágrafo. Parabéns pela evolução!</p>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent-strong">LC</span>
+              <div class="min-w-0 flex-1">
+                <p class="text-sm"><span class="font-medium">Lucas Costa</span> <span class="text-slate-400">· 13/06/2026 18:05</span></p>
+                <p class="mt-1 text-sm leading-6 text-slate-600">A conclusão ficou bem completa, gostei da ideia das ciclovias.</p>
+              </div>
+            </li>
+          </ul>
+
+          <form class="flex items-end gap-2 border-t border-slate-100 pt-5" data-comment-form>
+            <label for="comment-text" class="sr-only">Escreva um comentário</label>
+            <textarea id="comment-text" name="text" rows="1" placeholder="Escreva um comentário…"
+              class="form-input field-sizing-content h-auto max-h-40 min-h-10 resize-none py-2.5"></textarea>
+            <button type="submit" class="btn-primary size-10 px-0" aria-label="Enviar comentário">
+              <span class="icon-[lucide--send-horizontal] size-4" aria-hidden="true"></span>
+            </button>
+          </form>
+        </section>
+
+    </div>
+  </main>
+
+  <!-- Navegação inferior (celular) -->
+  <div class="h-[calc(4rem+env(safe-area-inset-bottom))] md:hidden"></div>
+  <nav aria-label="Principal" class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
+    <div class="grid h-16 grid-cols-2">
+      <a href="student-home.html" class="bottom-nav-link">
+        <span class="icon-[lucide--house] size-5" aria-hidden="true"></span>Início
+      </a>
+      <a href="student-area.html" class="bottom-nav-link" aria-current="page">
+        <span class="icon-[lucide--book-open] size-5" aria-hidden="true"></span>Meu Espaço
+      </a>
+    </div>
+  </nav>
+
+  <!-- Comentário completo da análise
+       INTEGRAÇÃO: {!! $writingAnalisys['comments'] !!} -->
+  <dialog id="analysis-sheet" class="sheet" aria-labelledby="analysis-sheet-title">
+    <div class="flex items-center gap-3 border-b border-slate-100 px-6 py-4">
+      <span class="icon-chip size-9"><span class="icon-[lucide--chart-no-axes-column] size-4" aria-hidden="true"></span></span>
+      <h2 id="analysis-sheet-title" class="flex-1 font-heading text-lg font-semibold">Comentário da análise</h2>
+      <form method="dialog"><button class="btn-icon" aria-label="Fechar"><span class="icon-[lucide--x] size-5" aria-hidden="true"></span></button></form>
+    </div>
+    <div class="rich-text flex-1 overflow-y-auto px-6 py-6">
+      <h3>Competência 1 · 160/200</h3>
+      <p>Bom domínio da norma escrita, com poucos desvios de pontuação. Atenção ao uso da vírgula antes de orações adverbiais.</p>
+      <h3>Competência 2 · 200/200</h3>
+      <p>O tema foi plenamente compreendido e desenvolvido dentro da estrutura dissertativo-argumentativa.</p>
+      <h3>Competência 3 · 160/200</h3>
+      <p>Os argumentos são pertinentes e bem organizados. O terceiro parágrafo poderia trazer um exemplo concreto.</p>
+      <h3>Competência 4 · 180/200</h3>
+      <p>Boa articulação entre os parágrafos, com conectivos variados.</p>
+      <h3>Competência 5 · 140/200</h3>
+      <p>A proposta de intervenção apresenta agente, ação e finalidade, mas falta detalhar o meio de execução.</p>
+    </div>
+  </dialog>
+
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/student-project.js" defer></script>
+</body>
+</html>

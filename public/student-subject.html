@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulado ENEM 2026 · 3º bimestre · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+
+<body>
+  <!-- ============================================================
+       CABEÇALHO (igual às demais telas do aluno; na integração vira layout Blade)
+       ============================================================ -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-5xl items-center gap-6 px-4 sm:px-6">
+      <a href="student-home.html" class="shrink-0">
+        <img src="assets/img/logo-white.png" alt="IADocs" class="h-9 w-auto brightness-0">
+      </a>
+
+      <nav aria-label="Principal" class="hidden items-center gap-1 md:flex">
+        <a href="student-home.html" class="nav-link">Início</a>
+        <a href="student-area.html" class="nav-link" aria-current="page">Meu Espaço</a>
+      </nav>
+
+      <div class="relative ml-auto" data-dropdown>
+        <button type="button" data-dropdown-trigger aria-expanded="false" aria-haspopup="menu" aria-label="Sua conta"
+          class="flex items-center gap-3 rounded-full py-1 pr-1 pl-1 transition hover:bg-slate-100 sm:pl-4">
+          <span class="hidden text-right sm:block">
+            <span class="block text-sm leading-tight font-medium">Maria Souza</span>
+            <span class="block text-xs leading-tight text-slate-500">Aluno</span>
+          </span>
+          <span class="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">MS</span>
+        </button>
+
+        <div data-dropdown-menu role="menu"
+          class="absolute right-0 z-40 mt-2 hidden w-60 rounded-2xl bg-white p-1.5 shadow-lg ring-1 ring-slate-900/5">
+          <div class="px-3 pt-2 pb-3">
+            <p class="truncate text-sm font-medium">Maria Souza</p>
+            <p class="truncate text-xs text-slate-500">maria.souza@escola.com.br</p>
+          </div>
+          <div class="my-1 h-px bg-slate-100"></div>
+          <a href="student-profile.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--user-round] size-4 text-slate-400" aria-hidden="true"></span>Meu perfil
+          </a>
+          <a href="login.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--log-out] size-4 text-slate-400" aria-hidden="true"></span>Sair da conta
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTEÚDO
+       ============================================================ -->
+  <main class="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 sm:px-6 md:py-10">
+
+    <!-- Cabeçalho do tema -->
+    <div class="flex flex-col gap-4">
+      <!-- INTEGRAÇÃO: route('student.area') -->
+      <a href="student-area.html?tab=subjects" class="flex w-fit items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-slate-900">
+        <span class="icon-[lucide--arrow-left] size-4" aria-hidden="true"></span>Meu Espaço
+      </a>
+
+      <div class="flex flex-col gap-3">
+        <!-- INTEGRAÇÃO: $subject->area->name -->
+        <span class="badge-accent">Linguagens</span>
+        <!-- INTEGRAÇÃO: $subject->name -->
+        <h1 class="font-heading text-2xl font-semibold tracking-tight text-balance sm:text-3xl">Simulado ENEM 2026 · 3º bimestre</h1>
+
+        <div class="flex flex-wrap gap-x-5 gap-y-2">
+          <!-- INTEGRAÇÃO: $subject->personCreated->name -->
+          <span class="meta"><span class="icon-[lucide--user-round] size-4 shrink-0" aria-hidden="true"></span>Prof. Ana Lima</span>
+          <!-- INTEGRAÇÃO: $subject->classGroup->name -->
+          <span class="meta"><span class="icon-[lucide--users] size-4 shrink-0" aria-hidden="true"></span>3º ano A</span>
+          <!-- INTEGRAÇÃO: @if ($subject->end_date) · format('d/m/Y H:i') -->
+          <span class="meta"><span class="icon-[lucide--calendar-clock] size-4 shrink-0" aria-hidden="true"></span>Até 20/11/2026 às 23:59</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+
+      <!-- ==================== AÇÕES (na lateral no desktop, no topo no celular) ==================== -->
+      <aside class="flex flex-col gap-4 lg:sticky lg:top-24 lg:order-last">
+        <section class="card gap-4 p-5" aria-labelledby="types-title">
+          <div class="flex flex-col gap-1">
+            <h2 id="types-title" class="section-title text-base">Tipo de texto</h2>
+            <p class="text-sm text-slate-500">Escolha um tipo para começar sua redação.</p>
+          </div>
+
+          <!-- INTEGRAÇÃO: @foreach ($subject->keywordsSubject as $keywordSubject)
+               projectCreated == null e prazo vigente → Iniciar (POST route('project.create') { subject_id, keyword_id } → /projects/{id})
+               projectCreated sem send_date e prazo vigente → Continuar (mesmo POST)
+               demais casos → Visualizar (route('project-contribution.index', project_id))
+               Sem redação e prazo encerrado → sem botão, só o aviso "Prazo encerrado" -->
+          <ul class="flex flex-col gap-2">
+            <li class="flex flex-col gap-3 rounded-2xl bg-slate-50 p-4">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-medium">Dissertativo-argumentativo</span>
+              </div>
+              <button type="button" class="btn-primary w-full" data-create-project data-keyword-id="1">
+                <span class="icon-[lucide--file-plus-2] size-4" data-icon aria-hidden="true"></span>
+                <span data-label>Iniciar redação</span>
+              </button>
+            </li>
+
+            <li class="flex flex-col gap-3 rounded-2xl bg-slate-50 p-4">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-medium">Carta argumentativa</span>
+                <span class="badge-warning"><span class="badge-dot"></span>Em andamento</span>
+              </div>
+              <button type="button" class="btn-primary w-full" data-create-project data-keyword-id="2">
+                <span class="icon-[lucide--pencil] size-4" data-icon aria-hidden="true"></span>
+                <span data-label>Continuar redação</span>
+              </button>
+            </li>
+
+            <li class="flex flex-col gap-3 rounded-2xl bg-slate-50 p-4">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-medium">Artigo de opinião</span>
+                <span class="badge-success"><span class="badge-dot"></span>Entregue</span>
+              </div>
+              <a href="student-project.html" class="btn-outline w-full">
+                <span class="icon-[lucide--eye] size-4" aria-hidden="true"></span>Visualizar redação
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- INTEGRAÇÃO: só para temas ENEM · href="{{ $subject->subjectEnem->extra }}" -->
+        <a href="#" target="_blank" rel="noopener" class="card-link flex-row items-center gap-3 p-4">
+          <span class="icon-chip"><span class="icon-[lucide--library] size-5" aria-hidden="true"></span></span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-sm font-medium">Material de apoio</span>
+            <span class="text-xs text-slate-500">Abre em uma nova aba</span>
+          </span>
+          <span class="icon-[lucide--external-link] size-4 shrink-0 text-slate-400" aria-hidden="true"></span>
+        </a>
+      </aside>
+
+      <!-- ==================== PROPOSTA ==================== -->
+      <article class="card gap-5 sm:p-8" aria-labelledby="proposal-title">
+        <div class="flex items-center gap-3">
+          <span class="icon-chip"><span class="icon-[lucide--scroll-text] size-5" aria-hidden="true"></span></span>
+          <h2 id="proposal-title" class="section-title">Proposta</h2>
+        </div>
+
+        <!-- INTEGRAÇÃO: {!! $subject->motivationTexts[0]->text !!} (HTML do Quill) -->
+        <div class="rich-text">
+          <p>
+            A partir da leitura dos textos motivadores e com base nos conhecimentos construídos ao longo de sua formação,
+            redija um texto na modalidade escrita formal da língua portuguesa sobre o tema
+            <strong>“A persistência da violência contra a mulher na sociedade brasileira”</strong>, apresentando proposta de
+            intervenção que respeite os direitos humanos. Selecione, organize e relacione, de forma coerente e coesa,
+            argumentos e fatos para defesa de seu ponto de vista.
+          </p>
+
+          <h3>Texto I</h3>
+          <blockquote>
+            <p>
+              A violência contra a mulher não se limita à agressão física. Ela também se manifesta de forma psicológica,
+              patrimonial, sexual e moral, e muitas vezes começa de maneira silenciosa, dentro de relações de confiança.
+              Reconhecer esses sinais é o primeiro passo para interromper o ciclo.
+            </p>
+          </blockquote>
+          <p class="source">Texto adaptado para fins didáticos.</p>
+
+          <h3>Texto II</h3>
+          <blockquote>
+            <p>
+              Campanhas de conscientização, canais de denúncia e redes de acolhimento têm ampliado o acesso das vítimas
+              à proteção. Ainda assim, a subnotificação continua alta, seja por medo, dependência financeira ou
+              desconhecimento dos próprios direitos.
+            </p>
+          </blockquote>
+          <p class="source">Texto adaptado para fins didáticos.</p>
+
+          <h3>Instruções</h3>
+          <ul>
+            <li>O texto deve ter entre 7 e 30 linhas.</li>
+            <li>Não copie trechos dos textos motivadores.</li>
+            <li>Dê um título à sua redação (opcional).</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Navegação inferior (celular) -->
+  <div class="h-[calc(4rem+env(safe-area-inset-bottom))] md:hidden"></div>
+  <nav aria-label="Principal" class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
+    <div class="grid h-16 grid-cols-2">
+      <a href="student-home.html" class="bottom-nav-link">
+        <span class="icon-[lucide--house] size-5" aria-hidden="true"></span>Início
+      </a>
+      <a href="student-area.html" class="bottom-nav-link" aria-current="page">
+        <span class="icon-[lucide--book-open] size-5" aria-hidden="true"></span>Meu Espaço
+      </a>
+    </div>
+  </nav>
+
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/student-subject.js" defer></script>
+</body>
+</html>

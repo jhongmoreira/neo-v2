@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transcrever redação · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+
+<!-- INTEGRAÇÃO: content/project-extract-text-file/project-extract-text-file-form.blade.php
+     extrair: POST route('project.extract-text-file.extract') · salvar imagem: POST route('project.extract-text-file.save-image')
+     Rótulo do botão de origem: $institution->getNamings()->btn_transcribe -->
+<body class="bg-slate-50">
+  <!-- Barra (modo foco) -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-7xl items-center gap-3 px-3 sm:px-6">
+      <a href="student-editor.html" class="btn-icon" aria-label="Voltar para o editor">
+        <span class="icon-[lucide--arrow-left] size-5" aria-hidden="true"></span>
+      </a>
+      <div class="min-w-0 flex-1">
+        <p class="truncate text-xs font-medium tracking-wide text-slate-500 uppercase">Transcrição</p>
+        <p class="truncate font-heading font-semibold">Caminhos para combater a desinformação nas redes</p>
+      </div>
+
+      <!-- Etapas -->
+      <ol class="hidden items-center gap-2 text-sm sm:flex" aria-label="Etapas">
+        <li class="flex items-center gap-2 font-medium text-primary" data-step-indicator="upload">
+          <span class="flex size-6 items-center justify-center rounded-full bg-primary text-xs text-white">1</span>Foto
+        </li>
+        <li class="h-px w-6 bg-slate-300" aria-hidden="true"></li>
+        <li class="flex items-center gap-2 text-slate-400" data-step-indicator="review">
+          <span class="flex size-6 items-center justify-center rounded-full bg-slate-200 text-xs text-slate-500">2</span>Revisão
+        </li>
+      </ol>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-3 py-6 sm:px-6 lg:py-8">
+
+    <!-- ==================== ETAPA 1: FOTO ==================== -->
+    <section data-step="upload" class="mx-auto flex max-w-2xl flex-col gap-6">
+      <div class="flex flex-col gap-1 text-center">
+        <h1 class="font-heading text-2xl font-semibold tracking-tight">Transcreva sua redação manuscrita</h1>
+        <p class="text-sm text-slate-500">Envie uma foto da folha e a inteligência artificial transforma em texto para você revisar.</p>
+      </div>
+
+      <label class="card cursor-pointer items-center gap-4 border-2 border-dashed border-slate-200 py-12 text-center shadow-none ring-0 transition hover:border-primary/40 hover:bg-primary/5 data-[dragging=true]:border-primary data-[dragging=true]:bg-primary/5" data-dropzone>
+        <span class="icon-chip size-14"><span class="icon-[lucide--image-up] size-6" aria-hidden="true"></span></span>
+        <span class="flex flex-col gap-1">
+          <span class="font-heading text-lg font-semibold">Arraste a foto aqui</span>
+          <span class="text-sm text-slate-500">ou clique para escolher um arquivo · JPG ou PNG</span>
+        </span>
+        <span class="btn-primary pointer-events-none mt-2">
+          <span class="icon-[lucide--upload] size-4" aria-hidden="true"></span>Escolher foto
+        </span>
+        <input type="file" accept="image/*" class="sr-only" data-file-input>
+      </label>
+
+      <!-- Câmera (celular) -->
+      <label class="btn-outline cursor-pointer sm:hidden">
+        <span class="icon-[lucide--camera] size-4" aria-hidden="true"></span>Tirar foto agora
+        <input type="file" accept="image/*" capture="environment" class="sr-only" data-file-input>
+      </label>
+
+      <ul class="grid gap-3 sm:grid-cols-3">
+        <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-slate-900/5">
+          <span class="icon-[lucide--sun] mt-0.5 size-4 shrink-0 text-accent-strong" aria-hidden="true"></span>
+          <span class="text-sm text-slate-600">Boa iluminação, sem sombras sobre a folha</span>
+        </li>
+        <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-slate-900/5">
+          <span class="icon-[lucide--scan] mt-0.5 size-4 shrink-0 text-accent-strong" aria-hidden="true"></span>
+          <span class="text-sm text-slate-600">Folha inteira enquadrada, de frente</span>
+        </li>
+        <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-slate-900/5">
+          <span class="icon-[lucide--focus] mt-0.5 size-4 shrink-0 text-accent-strong" aria-hidden="true"></span>
+          <span class="text-sm text-slate-600">Foto nítida, com a letra legível</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ==================== PROCESSANDO ==================== -->
+    <section data-step="processing" class="mx-auto hidden max-w-md">
+      <div class="card items-center gap-4 py-12 text-center">
+        <span class="relative flex size-16 items-center justify-center">
+          <span class="absolute inset-0 animate-ping rounded-full bg-accent/20"></span>
+          <span class="icon-chip relative size-16"><span class="icon-[lucide--scan-text] size-7" data-processing-icon aria-hidden="true"></span></span>
+        </span>
+        <div>
+          <p class="font-heading text-lg font-semibold" data-processing-title>Analisando a imagem…</p>
+          <p class="text-sm text-slate-500" data-processing-text>Isso costuma levar alguns segundos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ETAPA 2: REVISÃO ==================== -->
+    <section data-step="review" class="hidden space-y-6">
+      <div class="flex flex-col gap-1">
+        <h1 class="font-heading text-2xl font-semibold tracking-tight">Revise a transcrição</h1>
+        <p class="text-sm text-slate-500">Compare com a sua folha e corrija o que a leitura automática não entendeu.</p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <figure class="card gap-4 p-4 sm:p-5">
+          <figcaption class="flex items-center gap-3">
+            <span class="icon-chip size-9"><span class="icon-[lucide--image] size-4" aria-hidden="true"></span></span>
+            <span class="flex flex-col">
+              <span class="text-sm font-medium">Imagem</span>
+              <span class="text-xs text-slate-500">Redação manuscrita</span>
+            </span>
+          </figcaption>
+          <div class="overflow-hidden rounded-2xl bg-slate-100 lg:max-h-[calc(100dvh-20rem)] lg:overflow-y-auto">
+            <img src="assets/img/sample-handwritten.svg" alt="Foto da redação manuscrita" class="w-full" data-preview>
+          </div>
+        </figure>
+
+        <div class="card gap-4 p-4 sm:p-5">
+          <div class="flex items-center gap-3">
+            <span class="icon-chip size-9"><span class="icon-[lucide--file-text] size-4" aria-hidden="true"></span></span>
+            <span class="flex flex-col">
+              <span class="text-sm font-medium">Texto</span>
+              <span class="text-xs text-slate-500">Transcrição editável</span>
+            </span>
+          </div>
+          <!-- INTEGRAÇÃO: Quill com o texto extraído -->
+          <div class="editor-surface min-h-[20rem] rounded-2xl bg-slate-50 px-5 py-4 text-[0.9375rem] leading-7 focus:ring-2 focus:ring-primary/20 lg:max-h-[calc(100dvh-20rem)] lg:overflow-y-auto"
+            contenteditable="true" role="textbox" aria-multiline="true" aria-label="Texto transcrito" spellcheck="true" data-transcribed-text><p>Caminhos para combater a desinformação nas redes</p><p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira. As redes sociais aproximaram pessoas e ampliaram o acesso ao conhecimento, mas também se tornaram um terreno fértil para a desinformação.</p><p>Em primeiro lugar, é preciso reconhecer que a desinformação não se espalha apenas por má-fé. Muitas pessoas compartilham conteúdos falsos porque eles confirmam aquilo em que já acreditam, sem verificar a fonte.</p><p>Além disso, as plataformas têm responsabilidade, já que seus algoritmos priorizam o que gera engajamento, e não o que é confiável.</p><p>Portanto, cabe às escolas ensinar a checar informações e às plataformas sinalizar conteúdos duvidosos, para que as redes sejam um espaço de conhecimento.</p></div>
+        </div>
+      </div>
+
+      <div class="card gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <label class="flex cursor-pointer items-start gap-3 text-sm text-slate-600">
+          <input type="checkbox" class="mt-0.5 size-4 shrink-0 accent-primary" data-confirm>
+          <span>Declaro que o texto é de minha autoria manuscrita, que revisei a transcrição de forma integral e autorizo o compartilhamento da imagem com meu professor.</span>
+        </label>
+        <div class="flex shrink-0 gap-2">
+          <button type="button" class="btn-outline" data-reprocess>Cancelar</button>
+          <button type="button" class="btn-primary" data-advance disabled>
+            Avançar<span class="icon-[lucide--arrow-right] size-4" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/student-transcription.js" defer></script>
+</body>
+</html>

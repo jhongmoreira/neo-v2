@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meu Espaço · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+
+<body>
+  <!-- ============================================================
+       CABEÇALHO (igual ao da tela inicial; na integração vira layout Blade)
+       ============================================================ -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-5xl items-center gap-6 px-4 sm:px-6">
+      <a href="student-home.html" class="shrink-0">
+        <img src="assets/img/logo-white.png" alt="IADocs" class="h-9 w-auto brightness-0">
+      </a>
+
+      <nav aria-label="Principal" class="hidden items-center gap-1 md:flex">
+        <a href="student-home.html" class="nav-link">Início</a>
+        <a href="student-area.html" class="nav-link" aria-current="page">Meu Espaço</a>
+      </nav>
+
+      <div class="relative ml-auto" data-dropdown>
+        <button type="button" data-dropdown-trigger aria-expanded="false" aria-haspopup="menu" aria-label="Sua conta"
+          class="flex items-center gap-3 rounded-full py-1 pr-1 pl-1 transition hover:bg-slate-100 sm:pl-4">
+          <span class="hidden text-right sm:block">
+            <span class="block text-sm leading-tight font-medium">Maria Souza</span>
+            <span class="block text-xs leading-tight text-slate-500">Aluno</span>
+          </span>
+          <span class="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">MS</span>
+        </button>
+
+        <div data-dropdown-menu role="menu"
+          class="absolute right-0 z-40 mt-2 hidden w-60 rounded-2xl bg-white p-1.5 shadow-lg ring-1 ring-slate-900/5">
+          <div class="px-3 pt-2 pb-3">
+            <p class="truncate text-sm font-medium">Maria Souza</p>
+            <p class="truncate text-xs text-slate-500">maria.souza@escola.com.br</p>
+          </div>
+          <div class="my-1 h-px bg-slate-100"></div>
+          <a href="student-profile.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--user-round] size-4 text-slate-400" aria-hidden="true"></span>Meu perfil
+          </a>
+          <a href="login.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--log-out] size-4 text-slate-400" aria-hidden="true"></span>Sair da conta
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTEÚDO
+       ============================================================ -->
+  <main class="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-8 sm:px-6 md:py-10">
+    <div class="flex flex-col gap-1">
+      <h1 class="font-heading text-2xl font-semibold tracking-tight">Meu Espaço</h1>
+      <p class="text-sm text-slate-500">Escolha um tema para escrever ou acompanhe suas redações.</p>
+    </div>
+
+    <!-- Abas (?tab=subjects | projects | class-projects)
+         INTEGRAÇÃO: rótulos vêm de $institution->getNamings()->subjects / ->projects -->
+    <div class="tablist self-start" role="tablist" data-tabs>
+      <button type="button" role="tab" id="tab-subjects" aria-controls="panel-subjects" aria-selected="true" class="tab" data-tab="subjects">
+        Temas <span class="tab-count">6</span>
+      </button>
+      <button type="button" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="false" tabindex="-1" class="tab" data-tab="projects">
+        Redações <span class="tab-count">6</span>
+      </button>
+      <button type="button" role="tab" id="tab-class-projects" aria-controls="panel-class-projects" aria-selected="false" tabindex="-1" class="tab" data-tab="class-projects">
+        Da turma <span class="tab-count">4</span>
+      </button>
+    </div>
+
+    <!-- ==================== TEMAS ==================== -->
+    <section id="panel-subjects" role="tabpanel" aria-labelledby="tab-subjects" class="flex flex-col gap-10">
+
+      <div class="flex flex-col gap-3">
+        <h2 class="section-title">Vigentes</h2>
+        <!-- INTEGRAÇÃO: @foreach ($subjects as $subject) · link /student/subject/{id}
+             @if ($subjects->isEmpty()) → bloco .empty-state -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="card gap-4">
+            <span class="badge-accent">Linguagens</span>
+            <h3 class="font-heading text-base leading-snug font-semibold">Simulado ENEM 2026 · 3º bimestre</h3>
+            <dl class="grid gap-1.5">
+              <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+              <div class="meta"><span class="icon-[lucide--user-round] size-3.5 shrink-0" aria-hidden="true"></span>Prof. Ana Lima</div>
+              <div class="meta"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Até 20/11/2026</div>
+            </dl>
+            <a href="student-subject.html" class="btn-primary mt-auto">Abrir tema<span class="icon-[lucide--arrow-right] size-4" aria-hidden="true"></span></a>
+          </article>
+
+          <article class="card gap-4">
+            <span class="badge-accent">Linguagens</span>
+            <h3 class="font-heading text-base leading-snug font-semibold">Atividade 5 · Língua Portuguesa</h3>
+            <dl class="grid gap-1.5">
+              <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+              <div class="meta"><span class="icon-[lucide--user-round] size-3.5 shrink-0" aria-hidden="true"></span>Prof. Carlos Mendes</div>
+              <!-- Prazo em até 7 dias: destaque em amarelo -->
+              <div class="meta font-medium text-warning-foreground"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Encerra em 3 dias</div>
+            </dl>
+            <a href="student-subject.html" class="btn-primary mt-auto">Abrir tema<span class="icon-[lucide--arrow-right] size-4" aria-hidden="true"></span></a>
+          </article>
+
+          <article class="card gap-4">
+            <span class="badge-accent">Ciências Humanas</span>
+            <h3 class="font-heading text-base leading-snug font-semibold">Carta argumentativa: cidadania e participação política</h3>
+            <dl class="grid gap-1.5">
+              <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+              <div class="meta"><span class="icon-[lucide--user-round] size-3.5 shrink-0" aria-hidden="true"></span>Prof. Ana Lima</div>
+              <div class="meta"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Sem data limite</div>
+            </dl>
+            <a href="student-subject.html" class="btn-primary mt-auto">Abrir tema<span class="icon-[lucide--arrow-right] size-4" aria-hidden="true"></span></a>
+          </article>
+
+          <article class="card gap-4">
+            <span class="badge-accent">Ciências da Natureza</span>
+            <h3 class="font-heading text-base leading-snug font-semibold">Projeto água: crise hídrica e consumo consciente</h3>
+            <dl class="grid gap-1.5">
+              <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+              <div class="meta"><span class="icon-[lucide--user-round] size-3.5 shrink-0" aria-hidden="true"></span>Prof. Bruno Rocha</div>
+              <div class="meta"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Até 05/12/2026</div>
+            </dl>
+            <a href="student-subject.html" class="btn-primary mt-auto">Abrir tema<span class="icon-[lucide--arrow-right] size-4" aria-hidden="true"></span></a>
+          </article>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="section-title">Expirados</h2>
+        <!-- INTEGRAÇÃO: @foreach ($subjectsExpired as $subject) -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="card gap-4">
+            <span class="badge-neutral">Linguagens</span>
+            <h3 class="font-heading text-base leading-snug font-semibold text-slate-600">Simulado ENEM 2026 · 2º bimestre</h3>
+            <dl class="grid gap-1.5">
+              <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+              <div class="meta"><span class="icon-[lucide--user-round] size-3.5 shrink-0" aria-hidden="true"></span>Prof. Ana Lima</div>
+              <div class="meta"><span class="icon-[lucide--calendar-x] size-3.5 shrink-0" aria-hidden="true"></span>Encerrado em 30/08/2026</div>
+            </dl>
+            <a href="student-subject.html" class="btn-outline mt-auto">Ver tema</a>
+          </article>
+
+          <article class="card gap-4">
+            <span class="badge-neutral">Linguagens</span>
+            <h3 class="font-heading text-base leading-snug font-semibold text-slate-600">Atividade 4 · Língua Portuguesa</h3>
+            <dl class="grid gap-1.5">
+              <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+              <div class="meta"><span class="icon-[lucide--user-round] size-3.5 shrink-0" aria-hidden="true"></span>Prof. Carlos Mendes</div>
+              <div class="meta"><span class="icon-[lucide--calendar-x] size-3.5 shrink-0" aria-hidden="true"></span>Encerrado em 12/08/2026</div>
+            </dl>
+            <a href="student-subject.html" class="btn-outline mt-auto">Ver tema</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REDAÇÕES ==================== -->
+    <section id="panel-projects" role="tabpanel" aria-labelledby="tab-projects" class="hidden">
+      <!-- INTEGRAÇÃO: @foreach ($projects as $project)
+           send_date != null                  → Entregue        (link /project-contribution/{id})
+           send_date == null e prazo vigente  → Em andamento    (link /projects/{id}, pode excluir)
+           send_date == null e prazo vencido  → Prazo expirado  (link /project-contribution/{id}) -->
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-project-list>
+
+        <article class="card gap-4" data-project-id="1">
+          <span class="badge-warning"><span class="badge-dot"></span>Em andamento</span>
+          <div class="flex flex-col gap-1">
+            <h3 class="font-heading text-base leading-snug font-semibold">Caminhos para combater a desinformação nas redes</h3>
+            <span class="text-xs text-slate-500">Artigo de opinião</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Atividade 5 · Língua Portuguesa</div>
+            <div class="meta font-medium text-warning-foreground"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Encerra em 3 dias</div>
+          </dl>
+          <div class="mt-auto flex items-center gap-2">
+            <a href="student-editor.html" class="btn-primary flex-1"><span class="icon-[lucide--pencil] size-4" aria-hidden="true"></span>Continuar</a>
+            <button type="button" data-delete-project class="btn-icon hover:bg-danger/10 hover:text-danger" aria-label="Excluir redação">
+              <span class="icon-[lucide--trash-2] size-4" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <article class="card gap-4" data-project-id="2">
+          <span class="badge-warning"><span class="badge-dot"></span>Em andamento</span>
+          <div class="flex flex-col gap-1">
+            <h3 class="font-heading text-base leading-snug font-semibold">A persistência da violência contra a mulher no Brasil</h3>
+            <span class="text-xs text-slate-500">Dissertativo-argumentativo</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Simulado ENEM 2026 · 3º bimestre</div>
+            <div class="meta"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Até 20/11/2026</div>
+          </dl>
+          <div class="mt-auto flex items-center gap-2">
+            <a href="student-editor.html" class="btn-primary flex-1"><span class="icon-[lucide--pencil] size-4" aria-hidden="true"></span>Continuar</a>
+            <button type="button" data-delete-project class="btn-icon hover:bg-danger/10 hover:text-danger" aria-label="Excluir redação">
+              <span class="icon-[lucide--trash-2] size-4" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <article class="card gap-4" data-project-id="3">
+          <span class="badge-warning"><span class="badge-dot"></span>Em andamento</span>
+          <div class="flex flex-col gap-1">
+            <h3 class="font-heading text-base leading-snug font-semibold">Crise hídrica e consumo consciente</h3>
+            <span class="text-xs text-slate-500">Texto dissertativo</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Projeto água</div>
+            <div class="meta"><span class="icon-[lucide--calendar-clock] size-3.5 shrink-0" aria-hidden="true"></span>Até 05/12/2026</div>
+          </dl>
+          <div class="mt-auto flex items-center gap-2">
+            <a href="student-editor.html" class="btn-primary flex-1"><span class="icon-[lucide--pencil] size-4" aria-hidden="true"></span>Continuar</a>
+            <button type="button" data-delete-project class="btn-icon hover:bg-danger/10 hover:text-danger" aria-label="Excluir redação">
+              <span class="icon-[lucide--trash-2] size-4" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <article class="card gap-4" data-project-id="4">
+          <span class="badge-danger"><span class="badge-dot"></span>Prazo expirado</span>
+          <div class="flex flex-col gap-1">
+            <h3 class="font-heading text-base leading-snug font-semibold">Os desafios da educação digital nas escolas públicas</h3>
+            <span class="text-xs text-slate-500">Dissertativo-argumentativo</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Simulado ENEM 2026 · 2º bimestre</div>
+            <div class="meta"><span class="icon-[lucide--calendar-x] size-3.5 shrink-0" aria-hidden="true"></span>Encerrado em 30/08/2026</div>
+          </dl>
+          <a href="student-project.html" class="btn-outline mt-auto">Visualizar</a>
+        </article>
+
+        <article class="card gap-4" data-project-id="5">
+          <span class="badge-success"><span class="badge-dot"></span>Entregue</span>
+          <div class="flex flex-col gap-1">
+            <h3 class="font-heading text-base leading-snug font-semibold">Mobilidade urbana e qualidade de vida</h3>
+            <span class="text-xs text-slate-500">Dissertativo-argumentativo</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Simulado ENEM 2026 · 1º bimestre</div>
+            <div class="meta"><span class="icon-[lucide--circle-check] size-3.5 shrink-0 text-success" aria-hidden="true"></span>Entregue em 12/06/2026</div>
+          </dl>
+          <a href="student-project.html" class="btn-outline mt-auto">Ver redação</a>
+        </article>
+
+        <article class="card gap-4" data-project-id="6">
+          <span class="badge-success"><span class="badge-dot"></span>Entregue</span>
+          <div class="flex flex-col gap-1">
+            <h3 class="font-heading text-base leading-snug font-semibold">Carta ao prefeito sobre o transporte escolar</h3>
+            <span class="text-xs text-slate-500">Carta argumentativa</span>
+          </div>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Atividade 4 · Língua Portuguesa</div>
+            <div class="meta"><span class="icon-[lucide--circle-check] size-3.5 shrink-0 text-success" aria-hidden="true"></span>Entregue em 10/08/2026</div>
+          </dl>
+          <a href="student-project.html" class="btn-outline mt-auto">Ver redação</a>
+        </article>
+      </div>
+
+      <div class="empty-state hidden" data-project-empty>
+        <span class="icon-chip"><span class="icon-[lucide--file-text] size-5" aria-hidden="true"></span></span>
+        <p class="font-heading font-semibold">Nenhuma redação ainda</p>
+        <p class="text-sm text-slate-500">Abra um tema na aba Temas para começar a escrever.</p>
+      </div>
+    </section>
+
+    <!-- ==================== REDAÇÕES DA TURMA ==================== -->
+    <section id="panel-class-projects" role="tabpanel" aria-labelledby="tab-class-projects" class="hidden">
+      <!-- INTEGRAÇÃO: @foreach ($projects as $project) · link route('project-contribution.index', id)
+           @if ($projects->isEmpty()) → bloco .empty-state -->
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="card gap-4">
+          <span class="badge-neutral">Dissertativo-argumentativo</span>
+          <h3 class="font-heading text-base leading-snug font-semibold">Os impactos das redes sociais na saúde mental dos jovens</h3>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Simulado ENEM 2026 · 3º bimestre</div>
+            <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+          </dl>
+          <a href="student-class-project.html" class="btn-outline mt-auto"><span class="icon-[lucide--message-square-plus] size-4" aria-hidden="true"></span>Ler e contribuir</a>
+        </article>
+
+        <article class="card gap-4">
+          <span class="badge-neutral">Dissertativo-argumentativo</span>
+          <h3 class="font-heading text-base leading-snug font-semibold">Desafios para a valorização do professor no Brasil</h3>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Simulado ENEM 2026 · 3º bimestre</div>
+            <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+          </dl>
+          <a href="student-class-project.html" class="btn-outline mt-auto"><span class="icon-[lucide--message-square-plus] size-4" aria-hidden="true"></span>Ler e contribuir</a>
+        </article>
+
+        <article class="card gap-4">
+          <span class="badge-neutral">Artigo de opinião</span>
+          <h3 class="font-heading text-base leading-snug font-semibold">Inteligência artificial na escola: aliada ou ameaça?</h3>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Atividade 5 · Língua Portuguesa</div>
+            <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+          </dl>
+          <a href="student-class-project.html" class="btn-outline mt-auto"><span class="icon-[lucide--message-square-plus] size-4" aria-hidden="true"></span>Ler e contribuir</a>
+        </article>
+
+        <article class="card gap-4">
+          <span class="badge-neutral">Carta argumentativa</span>
+          <h3 class="font-heading text-base leading-snug font-semibold">Pela ampliação das ciclovias no bairro</h3>
+          <dl class="grid gap-1.5">
+            <div class="meta"><span class="icon-[lucide--book-open-text] size-3.5 shrink-0" aria-hidden="true"></span>Atividade 4 · Língua Portuguesa</div>
+            <div class="meta"><span class="icon-[lucide--users] size-3.5 shrink-0" aria-hidden="true"></span>3º ano A</div>
+          </dl>
+          <a href="student-class-project.html" class="btn-outline mt-auto"><span class="icon-[lucide--message-square-plus] size-4" aria-hidden="true"></span>Ler e contribuir</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Navegação inferior (celular) -->
+  <div class="h-[calc(4rem+env(safe-area-inset-bottom))] md:hidden"></div>
+  <nav aria-label="Principal" class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
+    <div class="grid h-16 grid-cols-2">
+      <a href="student-home.html" class="bottom-nav-link">
+        <span class="icon-[lucide--house] size-5" aria-hidden="true"></span>Início
+      </a>
+      <a href="student-area.html" class="bottom-nav-link" aria-current="page">
+        <span class="icon-[lucide--book-open] size-5" aria-hidden="true"></span>Meu Espaço
+      </a>
+    </div>
+  </nav>
+
+  <!-- Confirmação de exclusão -->
+  <dialog id="delete-dialog"
+    class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-3xl bg-white p-6 text-slate-900 shadow-xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/30 backdrop:backdrop-blur-xs">
+    <span class="flex size-10 items-center justify-center rounded-full bg-danger/10 text-danger">
+      <span class="icon-[lucide--trash-2] size-5" aria-hidden="true"></span>
+    </span>
+    <h2 class="mt-4 font-heading text-lg font-semibold">Excluir redação?</h2>
+    <p class="mt-1 text-sm text-slate-500">Essa ação não pode ser desfeita.</p>
+    <form method="dialog" class="mt-6 flex justify-end gap-2">
+      <button value="cancel" class="btn-outline">Cancelar</button>
+      <!-- INTEGRAÇÃO: POST /student/deleteProject { id } -->
+      <button value="confirm" class="btn-danger">Excluir</button>
+    </form>
+  </dialog>
+
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/project-delete.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Histórico de versões · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+
+<body>
+  <!-- ============================================================
+       CABEÇALHO (igual ao da tela inicial; na integração vira layout Blade)
+       ============================================================ -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-5xl items-center gap-6 px-4 sm:px-6">
+      <a href="student-home.html" class="shrink-0">
+        <img src="assets/img/logo-white.png" alt="IADocs" class="h-9 w-auto brightness-0">
+      </a>
+
+      <nav aria-label="Principal" class="hidden items-center gap-1 md:flex">
+        <a href="student-home.html" class="nav-link">Início</a>
+        <a href="student-area.html" class="nav-link" aria-current="page">Meu Espaço</a>
+      </nav>
+
+      <div class="relative ml-auto" data-dropdown>
+        <button type="button" data-dropdown-trigger aria-expanded="false" aria-haspopup="menu" aria-label="Sua conta"
+          class="flex items-center gap-3 rounded-full py-1 pr-1 pl-1 transition hover:bg-slate-100 sm:pl-4">
+          <span class="hidden text-right sm:block">
+            <span class="block text-sm leading-tight font-medium">Maria Souza</span>
+            <span class="block text-xs leading-tight text-slate-500">Aluno</span>
+          </span>
+          <span class="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">MS</span>
+        </button>
+
+        <div data-dropdown-menu role="menu"
+          class="absolute right-0 z-40 mt-2 hidden w-60 rounded-2xl bg-white p-1.5 shadow-lg ring-1 ring-slate-900/5">
+          <div class="px-3 pt-2 pb-3">
+            <p class="truncate text-sm font-medium">Maria Souza</p>
+            <p class="truncate text-xs text-slate-500">maria.souza@escola.com.br</p>
+          </div>
+          <div class="my-1 h-px bg-slate-100"></div>
+          <a href="student-profile.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--user-round] size-4 text-slate-400" aria-hidden="true"></span>Meu perfil
+          </a>
+          <a href="login.html" role="menuitem" class="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+            <span class="icon-[lucide--log-out] size-4 text-slate-400" aria-hidden="true"></span>Sair da conta
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTEÚDO
+       INTEGRAÇÃO: content/project-history/project-history-index.blade.php
+       ($projectTextHistories paginado · texto de cada versão via route('project-history.get-text'))
+       ============================================================ -->
+  <main class="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-8 sm:px-6 md:py-10">
+    <div class="flex flex-col gap-4">
+      <!-- INTEGRAÇÃO: url()->previous() -->
+      <a href="student-editor.html" class="flex w-fit items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-slate-900">
+        <span class="icon-[lucide--arrow-left] size-4" aria-hidden="true"></span>Voltar para a redação
+      </a>
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div class="flex flex-col gap-1">
+          <h1 class="font-heading text-2xl font-semibold tracking-tight">Histórico de versões</h1>
+          <p class="text-sm text-slate-500">Caminhos para combater a desinformação nas redes</p>
+        </div>
+        <!-- INTEGRAÇÃO: $projectTextHistories->total() -->
+        <span class="badge-neutral"><span class="icon-[lucide--layers] size-3" aria-hidden="true"></span>14 versões salvas</span>
+      </div>
+    </div>
+
+    <section class="card gap-2 py-2">
+      <p class="flex items-start gap-2 pt-2 text-sm text-slate-500">
+        <span class="icon-[lucide--info] mt-0.5 size-4 shrink-0" aria-hidden="true"></span>
+        Uma nova versão é salva automaticamente enquanto você escreve. Você pode consultar ou restaurar qualquer uma delas.
+      </p>
+      <!-- INTEGRAÇÃO: @forelse ($projectTextHistories as $history) · @empty → bloco .empty-state "Nenhum histórico encontrado." -->
+      <ul class="divide-y divide-slate-100">
+          <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+            <span class="icon-chip size-9"><span class="icon-[lucide--clock] size-4" aria-hidden="true"></span></span>
+            <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-sm font-medium">Caminhos para combater a desinformação nas redes</span>
+                <span class="badge-info">Mais recente</span>
+              </div>
+              <span class="text-xs text-slate-500">06/11/2026 às 14:05 · há 5 minutos</span>
+            </div>
+            <button type="button" class="btn-outline h-9 px-4" data-view-version="0" data-date="06/11/2026 às 14:05" data-title="Caminhos para combater a desinformação nas redes">
+              <span class="icon-[lucide--eye] size-4" aria-hidden="true"></span>Visualizar
+            </button>
+          </li>
+          <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+            <span class="icon-chip size-9"><span class="icon-[lucide--clock] size-4" aria-hidden="true"></span></span>
+            <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-sm font-medium">Caminhos para combater a desinformação nas redes</span>
+              </div>
+              <span class="text-xs text-slate-500">06/11/2026 às 13:52 · há 18 minutos</span>
+            </div>
+            <button type="button" class="btn-outline h-9 px-4" data-view-version="1" data-date="06/11/2026 às 13:52" data-title="Caminhos para combater a desinformação nas redes">
+              <span class="icon-[lucide--eye] size-4" aria-hidden="true"></span>Visualizar
+            </button>
+          </li>
+          <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+            <span class="icon-chip size-9"><span class="icon-[lucide--clock] size-4" aria-hidden="true"></span></span>
+            <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-sm font-medium">Caminhos para combater a desinformação nas redes</span>
+              </div>
+              <span class="text-xs text-slate-500">06/11/2026 às 13:40 · há 30 minutos</span>
+            </div>
+            <button type="button" class="btn-outline h-9 px-4" data-view-version="2" data-date="06/11/2026 às 13:40" data-title="Caminhos para combater a desinformação nas redes">
+              <span class="icon-[lucide--eye] size-4" aria-hidden="true"></span>Visualizar
+            </button>
+          </li>
+          <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+            <span class="icon-chip size-9"><span class="icon-[lucide--clock] size-4" aria-hidden="true"></span></span>
+            <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-sm font-medium">Caminhos para combater a desinformação nas redes</span>
+              </div>
+              <span class="text-xs text-slate-500">05/11/2026 às 19:12 · ontem</span>
+            </div>
+            <button type="button" class="btn-outline h-9 px-4" data-view-version="3" data-date="05/11/2026 às 19:12" data-title="Caminhos para combater a desinformação nas redes">
+              <span class="icon-[lucide--eye] size-4" aria-hidden="true"></span>Visualizar
+            </button>
+          </li>
+          <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+            <span class="icon-chip size-9"><span class="icon-[lucide--clock] size-4" aria-hidden="true"></span></span>
+            <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-sm font-medium">Desinformação nas redes</span>
+              </div>
+              <span class="text-xs text-slate-500">05/11/2026 às 19:03 · ontem</span>
+            </div>
+            <button type="button" class="btn-outline h-9 px-4" data-view-version="4" data-date="05/11/2026 às 19:03" data-title="Desinformação nas redes">
+              <span class="icon-[lucide--eye] size-4" aria-hidden="true"></span>Visualizar
+            </button>
+          </li>
+          <li class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+            <span class="icon-chip size-9"><span class="icon-[lucide--clock] size-4" aria-hidden="true"></span></span>
+            <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-sm font-medium italic text-slate-400">Sem título</span>
+              </div>
+              <span class="text-xs text-slate-500">04/11/2026 às 10:21 · há 2 dias</span>
+            </div>
+            <button type="button" class="btn-outline h-9 px-4" data-view-version="5" data-date="04/11/2026 às 10:21" data-title="Sem título">
+              <span class="icon-[lucide--eye] size-4" aria-hidden="true"></span>Visualizar
+            </button>
+          </li>
+      </ul>
+    </section>
+
+    <!-- Paginação · INTEGRAÇÃO: $projectTextHistories->links() -->
+    <nav class="flex items-center justify-between gap-3" aria-label="Paginação">
+      <span class="text-sm text-slate-500">Página 1 de 3</span>
+      <div class="flex items-center gap-1">
+        <button type="button" class="btn-icon size-9" aria-label="Página anterior" disabled><span class="icon-[lucide--chevron-left] size-4 opacity-40" aria-hidden="true"></span></button>
+        <a href="#" class="flex size-9 items-center justify-center rounded-full bg-primary text-sm font-medium text-white" aria-current="page">1</a>
+        <a href="#" class="flex size-9 items-center justify-center rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100">2</a>
+        <a href="#" class="flex size-9 items-center justify-center rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100">3</a>
+        <a href="#" class="btn-icon size-9" aria-label="Próxima página"><span class="icon-[lucide--chevron-right] size-4" aria-hidden="true"></span></a>
+      </div>
+    </nav>
+  </main>
+
+  <!-- Visualização de uma versão -->
+  <dialog id="version-sheet" class="sheet" aria-labelledby="version-title">
+    <div class="flex items-start gap-3 border-b border-slate-100 px-6 py-4">
+      <div class="min-w-0 flex-1">
+        <h2 id="version-title" class="font-heading text-lg font-semibold" data-version-title></h2>
+        <p class="text-sm text-slate-500" data-version-date></p>
+      </div>
+      <form method="dialog"><button class="btn-icon" aria-label="Fechar"><span class="icon-[lucide--x] size-5" aria-hidden="true"></span></button></form>
+    </div>
+    <div class="rich-text flex-1 overflow-y-auto px-6 py-6 text-base leading-8 text-slate-800" data-version-text></div>
+    <!-- INTEGRAÇÃO: restaurar só se a redação não foi enviada · PUT route('project-history.restore-text') -->
+    <div class="flex justify-end gap-2 border-t border-slate-100 px-6 py-4">
+      <form method="dialog"><button class="btn-outline">Fechar</button></form>
+      <button type="button" class="btn-primary" data-restore-version>
+        <span class="icon-[lucide--rotate-ccw] size-4" aria-hidden="true"></span>Restaurar esta versão
+      </button>
+    </div>
+  </dialog>
+
+  <template id="version-0"><p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira. As redes sociais aproximaram pessoas e ampliaram o acesso ao conhecimento, mas também se tornaram um terreno fértil para a desinformação, que circula mais rápido do que qualquer correção.</p><p>Em primeiro lugar, é preciso reconhecer que a desinformação não se espalha apenas por má-fé. Muitas pessoas compartilham conteúdos falsos porque eles confirmam aquilo em que já acreditam, sem verificar a fonte ou a data da publicação. Esse comportamento mostra que o problema também é educacional.</p><p>Além disso, as próprias plataformas têm responsabilidade, já que seus algoritmos priorizam o que gera engajamento, e não o que é confiável.</p></template>
+  <template id="version-1"><p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira. As redes sociais aproximaram pessoas e ampliaram o acesso ao conhecimento, mas também se tornaram um terreno fértil para a desinformação, que circula mais rápido do que qualquer correção.</p><p>Em primeiro lugar, é preciso reconhecer que a desinformação não se espalha apenas por má-fé. Muitas pessoas compartilham conteúdos falsos porque eles confirmam aquilo em que já acreditam, sem verificar a fonte ou a data da publicação. Esse comportamento mostra que o problema também é educacional.</p></template>
+  <template id="version-2"><p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira. As redes sociais aproximaram pessoas e ampliaram o acesso ao conhecimento, mas também se tornaram um terreno fértil para a desinformação, que circula mais rápido do que qualquer correção.</p><p>Em primeiro lugar, a desinformação não se espalha apenas por má-fé. Muitas pessoas compartilham conteúdos falsos sem verificar a fonte.</p></template>
+  <template id="version-3"><p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira. As redes sociais aproximaram pessoas e ampliaram o acesso ao conhecimento, mas também se tornaram um terreno fértil para a desinformação, que circula mais rápido do que qualquer correção.</p></template>
+  <template id="version-4"><p>As redes sociais aproximaram pessoas, mas também se tornaram um terreno fértil para a desinformação.</p></template>
+  <template id="version-5"><p>As redes sociais aproximaram pessoas, mas também se tornaram um terreno fértil para a desinformação.</p></template>
+
+  <!-- Navegação inferior (celular) -->
+  <div class="h-[calc(4rem+env(safe-area-inset-bottom))] md:hidden"></div>
+  <nav aria-label="Principal" class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
+    <div class="grid h-16 grid-cols-2">
+      <a href="student-home.html" class="bottom-nav-link">
+        <span class="icon-[lucide--house] size-5" aria-hidden="true"></span>Início
+      </a>
+      <a href="student-area.html" class="bottom-nav-link" aria-current="page">
+        <span class="icon-[lucide--book-open] size-5" aria-hidden="true"></span>Meu Espaço
+      </a>
+    </div>
+  </nav>
+
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/student-history.js" defer></script>
+</body>
+</html>

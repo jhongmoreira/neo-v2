@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escrevendo · Caminhos para combater a desinformação nas redes · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+
+<body class="bg-slate-50">
+  <!-- ============================================================
+       BARRA DO EDITOR (modo foco: sem o menu principal)
+       ============================================================ -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-7xl items-center gap-2 px-3 sm:gap-3 sm:px-6">
+      <!-- INTEGRAÇÃO: /student/subject/{subject_id} -->
+      <a href="student-subject.html" class="btn-icon" aria-label="Voltar para o tema">
+        <span class="icon-[lucide--arrow-left] size-5" aria-hidden="true"></span>
+      </a>
+
+      <div class="min-w-0 flex-1">
+        <!-- INTEGRAÇÃO: $project->keyword->name · $project->subject->name -->
+        <p class="truncate text-xs font-medium tracking-wide text-slate-500 uppercase">Artigo de opinião</p>
+        <p class="truncate font-heading font-semibold">Atividade 5 · Língua Portuguesa</p>
+      </div>
+
+      <span class="hidden items-center gap-1.5 text-xs text-slate-500 sm:flex" data-save-status aria-live="polite">
+        <span class="icon-[lucide--circle-check] size-3.5 text-success" data-save-icon aria-hidden="true"></span>
+        <span data-save-label>Salvo</span>
+      </span>
+
+      <button type="button" class="btn-outline h-9 px-3 sm:px-4" data-open-proposal aria-label="Ver proposta">
+        <span class="icon-[lucide--book-open] size-4" aria-hidden="true"></span>
+        <span class="hidden sm:inline">Proposta</span>
+      </button>
+
+      <!-- INTEGRAÇÃO: route('project.publish') -->
+      <button type="button" class="btn-primary h-9 px-4" data-finish>
+        <span class="icon-[lucide--send] size-4" aria-hidden="true"></span>
+        Finalizar
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       ÁREA DE TRABALHO
+       ============================================================ -->
+  <main class="mx-auto grid max-w-7xl items-start gap-6 px-3 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:py-8">
+
+    <div class="flex min-w-0 flex-col gap-4">
+      <!-- Editor
+           INTEGRAÇÃO: form#form-project-text → route('project.text.save', project_id) + @csrf -->
+      <section class="card gap-0 overflow-hidden p-0" aria-label="Editor de redação">
+        <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-8">
+          <label for="title" class="sr-only">Título</label>
+          <textarea id="title" name="title" rows="1" placeholder="Escreva seu título…" autocomplete="off"
+            class="field-sizing-content min-w-0 flex-1 resize-none bg-transparent font-heading text-xl leading-snug font-semibold tracking-tight outline-none placeholder:text-slate-300 sm:text-2xl">Caminhos para combater a desinformação nas redes</textarea>
+          <!-- INTEGRAÇÃO: só se $project->subject->ocr_transcription_student_enabled · rótulo: getNamings()->btn_transcribe -->
+          <button type="button" class="btn-outline h-9 px-3" data-transcribe title="Transcrever o texto a partir de uma foto da sua redação manuscrita">
+            <span class="icon-[lucide--wand-sparkles] size-4 text-accent-strong" aria-hidden="true"></span>
+            <span class="hidden sm:inline">Transcrever</span>
+          </button>
+        </div>
+
+        <!-- Barra de formatação. As classes ql-* permitem plugar o Quill direto
+             (modules.toolbar: '#toolbar-container'). -->
+        <div id="toolbar-container" class="flex flex-wrap items-center gap-0.5 border-b border-slate-100 px-3 py-1.5 sm:px-6" role="toolbar" aria-label="Formatação">
+          <button type="button" class="toolbar-btn ql-bold" data-command="bold" aria-label="Negrito" aria-pressed="false"><span class="icon-[lucide--bold] size-4" aria-hidden="true"></span></button>
+          <button type="button" class="toolbar-btn ql-italic" data-command="italic" aria-label="Itálico" aria-pressed="false"><span class="icon-[lucide--italic] size-4" aria-hidden="true"></span></button>
+          <button type="button" class="toolbar-btn ql-underline" data-command="underline" aria-label="Sublinhado" aria-pressed="false"><span class="icon-[lucide--underline] size-4" aria-hidden="true"></span></button>
+          <span class="mx-1 h-5 w-px bg-slate-200" aria-hidden="true"></span>
+          <button type="button" class="toolbar-btn ql-list" value="bullet" data-command="insertUnorderedList" aria-label="Lista" aria-pressed="false"><span class="icon-[lucide--list] size-4" aria-hidden="true"></span></button>
+          <button type="button" class="toolbar-btn ql-list" value="ordered" data-command="insertOrderedList" aria-label="Lista numerada" aria-pressed="false"><span class="icon-[lucide--list-ordered] size-4" aria-hidden="true"></span></button>
+          <span class="mx-1 h-5 w-px bg-slate-200" aria-hidden="true"></span>
+          <button type="button" class="toolbar-btn" data-command="undo" aria-label="Desfazer"><span class="icon-[lucide--undo-2] size-4" aria-hidden="true"></span></button>
+          <button type="button" class="toolbar-btn" data-command="redo" aria-label="Refazer"><span class="icon-[lucide--redo-2] size-4" aria-hidden="true"></span></button>
+        </div>
+
+        <!-- INTEGRAÇÃO: div#project-text recebe o Quill (translate="no") -->
+        <div id="project-text" class="editor-surface px-5 py-6 sm:px-8 sm:py-8" contenteditable="true" translate="no"
+          role="textbox" aria-multiline="true" aria-label="Texto da redação" data-placeholder="Comece a escrever sua redação…" spellcheck="true"><p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira. As redes sociais aproximaram pessoas e ampliaram o acesso ao conhecimento, mas também se tornaram um terreno fértil para a desinformação, que circula mais rápido do que qualquer correção.</p><p>Em primeiro lugar, é preciso reconhecer que a desinformação não se espalha apenas por má-fé. Muitas pessoas compartilham conteúdos falsos porque eles confirmam aquilo em que já acreditam, sem verificar a fonte ou a data da publicação. Esse comportamento mostra que o problema também é educacional.</p><p>Além disso, as próprias plataformas têm responsabilidade, já que seus algoritmos priorizam o que gera engajamento, e não o que é confiável.</p></div>
+
+        <div class="flex items-center justify-between gap-3 border-t border-slate-100 px-5 py-3 text-xs text-slate-500 sm:px-8">
+          <!-- INTEGRAÇÃO: substitui o módulo quill-counter (#counter) -->
+          <span data-counter>0 palavras</span>
+          <span class="flex items-center gap-1.5 sm:hidden" data-save-status aria-hidden="true">
+            <span class="icon-[lucide--circle-check] size-3.5 text-success" data-save-icon></span>
+            <span data-save-label>Salvo</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- Ações secundárias -->
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- INTEGRAÇÃO: /projects/{id}/history -->
+        <a href="student-history.html" class="btn-outline h-9 px-4">
+          <span class="icon-[lucide--history] size-4" aria-hidden="true"></span>Histórico
+        </a>
+        <!-- INTEGRAÇÃO: POST route('project.uploadImage') · remover: POST route('project.removeImage')
+             Se $project->image existir, renderizar já com o chip visível -->
+        <label class="btn-outline h-9 cursor-pointer px-4 focus-within:ring-3 focus-within:ring-slate-300/50" data-attach-image>
+          <span class="icon-[lucide--image-plus] size-4" aria-hidden="true"></span>Imagem
+          <input type="file" accept="image/*" class="sr-only" data-image-input>
+        </label>
+        <span class="hidden items-center gap-1 rounded-full border border-slate-200 bg-white p-1" data-image-chip>
+          <button type="button" class="flex items-center gap-2 rounded-full py-0.5 pr-3 pl-0.5 text-sm font-medium text-slate-700 hover:bg-slate-50" data-image-view>
+            <img src="" alt="" class="size-7 rounded-full object-cover" data-image-thumb>Imagem anexada
+          </button>
+          <button type="button" class="btn-icon size-7 hover:bg-danger/10 hover:text-danger" aria-label="Remover imagem" data-image-remove>
+            <span class="icon-[lucide--x] size-4" aria-hidden="true"></span>
+          </button>
+        </span>
+      </div>
+
+      <!-- Comentários (contribuições de professores e colegas)
+           INTEGRAÇÃO: conteúdo de #form-contribution-tab -->
+      <details class="group card gap-0 p-0">
+        <summary class="flex cursor-pointer list-none items-center gap-3 px-5 py-4 select-none sm:px-6 [&::-webkit-details-marker]:hidden">
+          <span class="icon-chip size-9"><span class="icon-[lucide--message-square-text] size-4" aria-hidden="true"></span></span>
+          <span class="flex-1 font-heading font-semibold">Comentários</span>
+          <span class="badge-neutral">2</span>
+          <span class="icon-[lucide--chevron-down] size-4 text-slate-400 transition group-open:rotate-180" aria-hidden="true"></span>
+        </summary>
+        <ul class="flex flex-col gap-4 border-t border-slate-100 px-5 py-5 sm:px-6">
+          <li class="flex gap-3">
+            <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">CM</span>
+            <div class="min-w-0">
+              <p class="text-sm"><span class="font-medium">Prof. Carlos Mendes</span> <span class="text-slate-400">· ontem</span></p>
+              <p class="mt-1 text-sm text-slate-600">Boa introdução! Tente deixar a sua opinião mais explícita já no primeiro parágrafo.</p>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent-strong">JP</span>
+            <div class="min-w-0">
+              <p class="text-sm"><span class="font-medium">João Pedro</span> <span class="text-slate-400">· há 2 dias</span></p>
+              <p class="mt-1 text-sm text-slate-600">Gostei do exemplo dos algoritmos, acho que dá para desenvolver mais.</p>
+            </div>
+          </li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- ============================================================
+         PAINEL LATERAL: Leituras · Assistente · Revisão
+         INTEGRAÇÃO: cada aba só aparece se o recurso estiver habilitado no tema
+         (support_material_enabled · writing_assistant_enabled · writing_metrics_enabled)
+         ============================================================ -->
+    <aside class="card gap-4 p-4 lg:sticky lg:top-24 lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
+      <div class="tablist flex w-full" role="tablist" data-tabs>
+        <button type="button" role="tab" id="tab-assistant" aria-controls="panel-assistant" aria-selected="true" class="tab flex-1 justify-center px-2" data-tab="assistant">Assistente</button>
+        <button type="button" role="tab" id="tab-review" aria-controls="panel-review" aria-selected="false" tabindex="-1" class="tab flex-1 justify-center px-2" data-tab="review">Revisão</button>
+        <button type="button" role="tab" id="tab-readings" aria-controls="panel-readings" aria-selected="false" tabindex="-1" class="tab flex-1 justify-center px-2" data-tab="readings">Leituras</button>
+      </div>
+
+      <!-- ==================== ASSISTENTE ==================== -->
+      <section id="panel-assistant" role="tabpanel" aria-labelledby="tab-assistant" class="space-y-4">
+        <!-- INTEGRAÇÃO: route('writing-assistant.project.generate') · respeitar next_update_seconds e limit_reached -->
+        <div class="flex flex-col gap-2">
+          <button type="button" class="btn-primary w-full" data-run-assistant>
+            <span class="icon-[lucide--sparkles] size-4" data-icon aria-hidden="true"></span>
+            <span data-label>Realizar nova análise</span>
+          </button>
+          <p class="hidden items-center justify-center gap-1.5 text-xs text-slate-500" data-assistant-timer>
+            <span class="icon-[lucide--clock] size-3.5" aria-hidden="true"></span>
+            <span>Nova análise disponível em <span data-countdown>60</span>s</span>
+          </p>
+        </div>
+
+        <!-- INTEGRAÇÃO: @foreach ($writingAssistantResult['writing_assistant_result']) · sem resultados → bloco vazio -->
+        <ol class="flex flex-col gap-3">
+          <li class="flex gap-3 rounded-2xl bg-slate-50 p-4">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent-strong">1</span>
+            <div class="min-w-0">
+              <p class="text-sm font-medium">Deixe sua opinião mais clara</p>
+              <p class="mt-1 text-sm leading-6 text-slate-600">No artigo de opinião, o leitor precisa saber logo no início o que você defende. Experimente encerrar a introdução com uma frase que resuma o seu ponto de vista.</p>
+            </div>
+          </li>
+          <li class="flex gap-3 rounded-2xl bg-slate-50 p-4">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent-strong">2</span>
+            <div class="min-w-0">
+              <p class="text-sm font-medium">Desenvolva o terceiro parágrafo</p>
+              <p class="mt-1 text-sm leading-6 text-slate-600">A ideia sobre os algoritmos é boa, mas ainda está em uma frase só. Explique como isso acontece e traga um exemplo.</p>
+            </div>
+          </li>
+          <li class="flex gap-3 rounded-2xl bg-slate-50 p-4">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-semibold text-accent-strong">3</span>
+            <div class="min-w-0">
+              <p class="text-sm font-medium">Falta a conclusão</p>
+              <p class="mt-1 text-sm leading-6 text-slate-600">Retome sua opinião e proponha caminhos concretos: quem pode agir e de que forma.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ==================== REVISÃO (métricas de escrita) ==================== -->
+      <section id="panel-review" role="tabpanel" aria-labelledby="tab-review" class="hidden space-y-4">
+        <!-- INTEGRAÇÃO: @foreach ($writingAnalisys as $metric) · cor da barra conforme class_color
+             Sem métricas → "Atividade sem análise de escrita." / "A correção de sua atividade ainda não foi finalizada." -->
+        <ul class="flex flex-col divide-y divide-slate-100">
+          <li class="flex flex-col gap-2 py-3 first:pt-0">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-sm font-medium">Coesão</span>
+              <span class="text-xs font-medium text-success">Muito bom</span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[85%] rounded-full bg-success"></div></div>
+            <p class="text-sm leading-6 text-slate-600">Os parágrafos estão bem ligados por conectivos como “em primeiro lugar” e “além disso”.</p>
+          </li>
+          <li class="flex flex-col gap-2 py-3">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-sm font-medium">Norma culta</span>
+              <span class="text-xs font-medium text-success">Muito bom</span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[90%] rounded-full bg-success"></div></div>
+            <p class="text-sm leading-6 text-slate-600">Poucos desvios gramaticais encontrados.</p>
+          </li>
+          <li class="flex flex-col gap-2 py-3">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-sm font-medium">Vocabulário</span>
+              <span class="text-xs font-medium text-warning-foreground">Regular</span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[60%] rounded-full bg-warning"></div></div>
+            <p class="text-sm leading-6 text-slate-600">Algumas palavras se repetem. Busque sinônimos para “informação” e “problema”.</p>
+          </li>
+          <li class="flex flex-col gap-2 py-3">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-sm font-medium">Desenvolvimento</span>
+              <span class="text-xs font-medium text-danger">Precisa melhorar</span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full w-[35%] rounded-full bg-danger"></div></div>
+            <p class="text-sm leading-6 text-slate-600">O texto ainda está curto e sem conclusão.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ==================== LEITURAS (material de apoio) ==================== -->
+      <section id="panel-readings" role="tabpanel" aria-labelledby="tab-readings" class="hidden space-y-3">
+        <!-- INTEGRAÇÃO: @foreach ($supportMaterials['items']) · registrar acesso em route('project.saveSupportMaterialAccessLog') -->
+        <a href="#" target="_blank" rel="noopener" class="flex flex-col gap-2 rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+          <span class="badge-accent"><span class="icon-[lucide--star] size-3" aria-hidden="true"></span>Indicado pelo professor</span>
+          <span class="flex items-start gap-2">
+            <span class="flex-1 text-sm font-medium">Guia prático: como checar uma notícia antes de compartilhar</span>
+            <span class="icon-[lucide--external-link] mt-0.5 size-3.5 shrink-0 text-slate-400" aria-hidden="true"></span>
+          </span>
+          <span class="text-sm leading-6 text-slate-600">Passo a passo para verificar fonte, data e autoria de conteúdos encontrados nas redes.</span>
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="flex flex-col gap-2 rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+          <span class="flex items-start gap-2">
+            <span class="flex-1 text-sm font-medium">O papel dos algoritmos na circulação de informações</span>
+            <span class="icon-[lucide--external-link] mt-0.5 size-3.5 shrink-0 text-slate-400" aria-hidden="true"></span>
+          </span>
+          <span class="text-sm leading-6 text-slate-600">Como as plataformas decidem o que aparece primeiro para cada pessoa.</span>
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="flex flex-col gap-2 rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+          <span class="flex items-start gap-2">
+            <span class="flex-1 text-sm font-medium">Educação midiática nas escolas</span>
+            <span class="icon-[lucide--external-link] mt-0.5 size-3.5 shrink-0 text-slate-400" aria-hidden="true"></span>
+          </span>
+          <span class="text-sm leading-6 text-slate-600">Experiências de ensino de leitura crítica de mídia.</span>
+        </a>
+      </section>
+    </aside>
+  </main>
+
+  <!-- ============================================================
+       PROPOSTA (painel lateral)
+       INTEGRAÇÃO: route('project.motivationText')
+       ============================================================ -->
+  <dialog id="proposal-sheet" class="sheet" aria-labelledby="proposal-sheet-title">
+    <div class="flex items-center gap-3 border-b border-slate-100 px-6 py-4">
+      <span class="icon-chip size-9"><span class="icon-[lucide--scroll-text] size-4" aria-hidden="true"></span></span>
+      <h2 id="proposal-sheet-title" class="flex-1 font-heading text-lg font-semibold">Proposta</h2>
+      <form method="dialog"><button class="btn-icon" aria-label="Fechar"><span class="icon-[lucide--x] size-5" aria-hidden="true"></span></button></form>
+    </div>
+    <div class="rich-text flex-1 overflow-y-auto px-6 py-6">
+      <p>
+        Com base nos textos de apoio e no que foi discutido em aula, escreva um <strong>artigo de opinião</strong> sobre o tema
+        <strong>“Caminhos para combater a desinformação nas redes sociais”</strong>. Defenda um ponto de vista e apresente
+        argumentos que o sustentem.
+      </p>
+      <h3>Texto I</h3>
+      <blockquote>
+        <p>Conteúdos que despertam emoções fortes, como medo ou indignação, tendem a ser compartilhados mais rapidamente, muitas vezes antes de qualquer verificação.</p>
+      </blockquote>
+      <p class="source">Texto adaptado para fins didáticos.</p>
+      <h3>Instruções</h3>
+      <ul>
+        <li>Entre 20 e 30 linhas.</li>
+        <li>Dê um título ao seu artigo.</li>
+      </ul>
+    </div>
+  </dialog>
+
+  <!-- Confirmação de envio -->
+  <dialog id="finish-dialog"
+    class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-3xl bg-white p-6 text-slate-900 shadow-xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/30 backdrop:backdrop-blur-xs">
+    <span class="icon-chip"><span class="icon-[lucide--send] size-5" aria-hidden="true"></span></span>
+    <h2 class="mt-4 font-heading text-lg font-semibold">Finalizar redação?</h2>
+    <p class="mt-1 text-sm text-slate-500">Depois de enviada, ela vai para correção e não poderá mais ser editada.</p>
+    <form method="dialog" class="mt-6 flex justify-end gap-2">
+      <button value="cancel" class="btn-outline">Continuar escrevendo</button>
+      <button value="confirm" class="btn-primary">Enviar</button>
+    </form>
+  </dialog>
+
+  <!-- Conflito de rascunho
+       INTEGRAÇÃO: exibir quando o rascunho local diferir do conteúdo salvo no servidor
+       (demonstração: abra a página com ?conflict=1) -->
+  <dialog id="draft-conflict" aria-labelledby="draft-conflict-title"
+    class="m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-4xl rounded-3xl bg-white p-0 text-slate-900 shadow-xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/30 backdrop:backdrop-blur-xs open:flex open:flex-col">
+    <div class="flex items-start gap-3 border-b border-slate-100 px-6 py-5">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-warning/18 text-warning-foreground">
+        <span class="icon-[lucide--git-compare-arrows] size-5" aria-hidden="true"></span>
+      </span>
+      <div>
+        <h2 id="draft-conflict-title" class="font-heading text-lg font-semibold">Encontramos duas versões do seu texto</h2>
+        <p class="mt-1 text-sm text-slate-500">Isso acontece quando a redação foi aberta em outra aba ou dispositivo, ou quando a conexão caiu durante o salvamento. Escolha qual versão manter.</p>
+      </div>
+    </div>
+    <div class="grid flex-1 gap-4 overflow-y-auto p-6 md:grid-cols-2">
+      <section class="flex flex-col gap-3 rounded-2xl ring-1 ring-slate-200">
+        <div class="flex items-center justify-between gap-2 px-4 pt-4">
+          <span class="text-sm font-medium">Versão salva</span>
+          <span class="text-xs text-slate-500">06/11/2026 às 14:05</span>
+        </div>
+        <div class="rich-text max-h-72 overflow-y-auto px-4 text-sm leading-6">
+          <p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira.</p>
+          <p>Em primeiro lugar, é preciso reconhecer que a desinformação não se espalha apenas por má-fé.</p>
+        </div>
+        <form method="dialog" class="mt-auto p-4 pt-0"><button value="current" class="btn-outline w-full">Manter versão salva</button></form>
+      </section>
+      <section class="flex flex-col gap-3 rounded-2xl ring-2 ring-primary/30">
+        <div class="flex items-center justify-between gap-2 px-4 pt-4">
+          <span class="text-sm font-medium">Rascunho deste dispositivo</span>
+          <span class="badge-info">Mais recente</span>
+        </div>
+        <div class="rich-text max-h-72 overflow-y-auto px-4 text-sm leading-6">
+          <p>Nunca foi tão fácil publicar uma informação, e nunca foi tão difícil saber se ela é verdadeira.</p>
+          <p>Em primeiro lugar, é preciso reconhecer que a desinformação não se espalha apenas por má-fé. <mark class="rounded bg-warning/25 px-0.5">Muitas pessoas compartilham conteúdos falsos porque eles confirmam aquilo em que já acreditam.</mark></p>
+        </div>
+        <form method="dialog" class="mt-auto p-4 pt-0"><button value="draft" class="btn-primary w-full">Restaurar rascunho</button></form>
+      </section>
+    </div>
+  </dialog>
+
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/student-editor.js" defer></script>
+</body>
+</html>

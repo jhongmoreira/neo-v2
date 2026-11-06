@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página não encontrada · IADocs</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+
+  <!-- INTEGRAÇÃO: <style>:root{--brand:{{ primary_color }};--brand-secondary:{{ secondary_color }}}</style> -->
+</head>
+
+<!-- INTEGRAÇÃO: substitui content/pages/pages-invalid-url / pages-misc-error -->
+<body class="h-full">
+  <main class="relative flex min-h-full flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
+    <div aria-hidden="true"
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,color-mix(in_oklab,var(--accent)_14%,transparent),transparent_60%)]"></div>
+
+    <div class="relative flex max-w-md flex-col items-center">
+      <img src="assets/img/logo-white.png" alt="IADocs" class="mb-12 h-14 w-auto brightness-0">
+
+      <span class="icon-chip size-16"><span class="icon-[lucide--map-pin-off] size-7" aria-hidden="true"></span></span>
+      <div class="mt-6 flex flex-col gap-2">
+        <p class="font-heading text-sm font-semibold tracking-widest text-accent-strong">ERRO 404</p>
+        <h1 class="font-heading text-2xl font-semibold tracking-tight text-balance sm:text-3xl">Página não encontrada</h1>
+        <p class="text-slate-500 text-pretty">O endereço que você tentou acessar não existe ou foi removido.</p>
+      </div>
+        <div class="mt-8 flex flex-wrap justify-center gap-2">
+          <button type="button" class="btn-outline" onclick="history.back()">
+            <span class="icon-[lucide--arrow-left] size-4" aria-hidden="true"></span>Voltar
+          </button>
+          <!-- INTEGRAÇÃO: url('/') -->
+          <a href="student-home.html" class="btn-primary">
+            <span class="icon-[lucide--house] size-4" aria-hidden="true"></span>Ir para o início
+          </a>
+        </div>
+    </div>
+  </main>
+
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+@import "tailwindcss";
+
+@source "../../public";
+
+/* Ícones Lucide como classes CSS: <span class="icon-[lucide--nome]"></span> (https://lucide.dev/icons) */
+@plugin "@iconify/tailwind4";
+
+/* Tema claro é sempre o padrão. O escuro só é ativado pela classe .dark no <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Cores da instituição (white-label)
+ * ---------------------------------------------------------------
+ * Na integração, sobrescrever com a paleta do tenant (app-mvp: color_palettes):
+ *   <style>:root{
+ *     --brand: {{ $institution->colorPalette->primary_color }};
+ *     --brand-secondary: {{ $institution->colorPalette->secondary_color }};
+ *   }</style>
+ *
+ * --primary  → cor principal (botões, links, item ativo). A luminosidade só é
+ *              corrigida se sair da faixa segura, garantindo contraste com texto
+ *              branco para qualquer cor que a instituição escolher.
+ * --accent   → cor de destaque (ícones, selos de área, brilhos). Vem da cor
+ *              secundária; --accent-strong é a versão escura, para texto.
+ * Navegadores sem suporte a "relative color" usam as cores originais.
+ */
+:root {
+  --brand: #0b4462;
+  --brand-secondary: #2d938e;
+
+  --primary: var(--brand);
+  --accent: var(--brand-secondary);
+  --accent-strong: var(--brand-secondary);
+
+  --success: oklch(0.6 0.15 150);
+  --warning: oklch(0.79 0.16 76);
+  --warning-foreground: oklch(0.42 0.11 60);
+  --danger: oklch(0.577 0.22 27);
+}
+
+@supports (color: oklch(from red l c h)) {
+  :root {
+    --primary: oklch(from var(--brand) clamp(0.34, l, 0.52) min(c, 0.17) h);
+    --accent: oklch(from var(--brand-secondary) clamp(0.55, l, 0.68) min(c, 0.17) h);
+    --accent-strong: oklch(from var(--brand-secondary) 0.45 min(c, 0.15) h);
+  }
+}
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Títulos com face própria: a mesma letra em tudo achata a hierarquia. */
+  --font-heading: "Instrument Sans", var(--font-sans);
+
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-white text-slate-900;
+  }
+
+  /* Tailwind v4 usa cursor padrão em botões; restaura a "mãozinha" */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
+
+  /* Scrollbar fino e discreto */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-slate-200) transparent;
+  }
+}
+
+/* ---------------------------------------------------------------
+ * Formulário
+ * --------------------------------------------------------------- */
+@utility form-label {
+  @apply mb-1.5 block text-sm font-medium text-slate-700;
+}
+
+@utility form-input {
+  @apply block h-10 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-900 shadow-xs transition
+    focus:border-primary focus:ring-3 focus:ring-primary/20 focus:outline-none
+    aria-invalid:border-danger aria-invalid:ring-danger/15;
+}
+
+/* ---------------------------------------------------------------
+ * Botões (formato pílula)
+ * --------------------------------------------------------------- */
+@utility btn {
+  @apply inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium whitespace-nowrap transition
+    focus-visible:ring-3 focus-visible:outline-none active:translate-y-px
+    disabled:pointer-events-none disabled:opacity-60;
+}
+
+@utility btn-primary {
+  @apply btn bg-primary text-white hover:bg-primary/85 focus-visible:ring-primary/30;
+}
+
+@utility btn-outline {
+  @apply btn border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 focus-visible:ring-slate-300/50;
+}
+
+@utility btn-danger {
+  @apply btn bg-danger text-white hover:bg-danger/85 focus-visible:ring-danger/30;
+}
+
+@utility btn-icon {
+  @apply inline-flex size-10 shrink-0 items-center justify-center rounded-full text-slate-500 transition
+    hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-3 focus-visible:ring-slate-300/50 focus-visible:outline-none;
+}
+
+@utility link {
+  @apply font-medium text-primary underline-offset-4 hover:underline;
+}
+
+/* ---------------------------------------------------------------
+ * Navegação
+ * --------------------------------------------------------------- */
+@utility nav-link {
+  @apply flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium text-slate-500 transition hover:text-slate-900
+    aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary;
+}
+
+@utility bottom-nav-link {
+  @apply flex flex-col items-center justify-center gap-1 text-[11px] font-medium text-slate-500 transition
+    aria-[current=page]:text-primary;
+}
+
+/* Abas segmentadas. Rolam na horizontal em telas estreitas, sem barra visível. */
+@utility tablist {
+  @apply inline-flex max-w-full shrink-0 gap-1 overflow-x-auto rounded-full bg-slate-100 p-1
+    [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
+@utility tab {
+  @apply flex h-8 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-medium whitespace-nowrap text-slate-500 transition
+    hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:outline-none
+    aria-selected:bg-white aria-selected:text-slate-900 aria-selected:shadow-sm;
+}
+
+@utility tab-count {
+  @apply text-xs text-slate-400 in-aria-selected:text-primary;
+}
+
+/* ---------------------------------------------------------------
+ * Superfícies
+ * --------------------------------------------------------------- */
+@utility card {
+  @apply flex flex-col rounded-3xl bg-white p-6 shadow-md shadow-slate-900/5 ring-1 ring-slate-900/5;
+}
+
+/* Cartão inteiro clicável */
+@utility card-link {
+  @apply card transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-primary/25
+    focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:outline-none;
+}
+
+/* Ícone em círculo na cor de destaque da instituição */
+@utility icon-chip {
+  @apply flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent-strong;
+}
+
+@utility section-title {
+  @apply font-heading text-lg font-semibold tracking-tight;
+}
+
+@utility empty-state {
+  @apply flex flex-col items-center gap-2 rounded-3xl border border-dashed border-slate-200 px-6 py-14 text-center;
+}
+
+/* ---------------------------------------------------------------
+ * Selos de status (com ponto colorido via <span class="badge-dot">)
+ * --------------------------------------------------------------- */
+@utility badge {
+  @apply inline-flex h-6 w-fit shrink-0 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium whitespace-nowrap;
+}
+
+@utility badge-dot {
+  @apply size-1.5 shrink-0 rounded-full bg-current;
+}
+
+@utility badge-info {
+  @apply badge bg-primary/10 text-primary;
+}
+
+@utility badge-accent {
+  @apply badge bg-accent/15 text-accent-strong;
+}
+
+@utility badge-success {
+  @apply badge bg-success/12 text-success;
+}
+
+@utility badge-warning {
+  @apply badge bg-warning/18 text-warning-foreground;
+}
+
+@utility badge-danger {
+  @apply badge bg-danger/10 text-danger;
+}
+
+@utility badge-neutral {
+  @apply badge bg-slate-100 text-slate-600;
+}
+
+/* Metadados com ícone (turma, prazo, professor…) */
+@utility meta {
+  @apply flex items-center gap-2 text-sm text-slate-500;
+}
+
+/* ---------------------------------------------------------------
+ * Texto rico (HTML vindo do editor Quill: proposta, textos motivadores…)
+ * --------------------------------------------------------------- */
+@utility rich-text {
+  @apply text-[0.9375rem] leading-7 text-slate-700;
+
+  & > * + * {
+    @apply mt-4;
+  }
+
+  & h2 {
+    @apply mt-8 font-heading text-lg font-semibold text-slate-900;
+  }
+
+  & h3 {
+    @apply mt-6 font-heading text-base font-semibold text-slate-900;
+  }
+
+  & strong {
+    @apply font-semibold text-slate-900;
+  }
+
+  & a {
+    @apply font-medium text-primary underline underline-offset-4;
+  }
+
+  & ul {
+    @apply list-disc pl-5;
+  }
+
+  & ol {
+    @apply list-decimal pl-5;
+  }
+
+  & li + li {
+    @apply mt-1;
+  }
+
+  & blockquote {
+    @apply rounded-2xl border-l-4 border-accent bg-slate-50 px-5 py-4 text-slate-600;
+  }
+
+  & img {
+    @apply rounded-2xl;
+  }
+
+  & .source {
+    @apply text-xs text-slate-400;
+  }
+}
+
+/* ---------------------------------------------------------------
+ * Toast (aviso flutuante) — criado via window.toast() em app.js
+ * --------------------------------------------------------------- */
+@utility toast {
+  @apply pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl bg-white p-4 text-sm shadow-lg ring-1 ring-slate-900/5 transition duration-300
+    starting:translate-y-2 starting:opacity-0;
+}
+
+/* ---------------------------------------------------------------
+ * Editor de redação
+ * --------------------------------------------------------------- */
+
+/* Área de escrita (na integração, o Quill monta dentro deste elemento) */
+@utility editor-surface {
+  @apply min-h-[26rem] text-base leading-8 text-slate-800 outline-none;
+
+  & > * + * {
+    @apply mt-4;
+  }
+
+  & ul {
+    @apply list-disc pl-6;
+  }
+
+  & ol {
+    @apply list-decimal pl-6;
+  }
+
+  &:empty::before {
+    content: attr(data-placeholder);
+    @apply text-slate-400;
+  }
+}
+
+/* Botão da barra de formatação */
+@utility toolbar-btn {
+  @apply inline-flex size-9 items-center justify-center rounded-lg text-slate-500 transition
+    hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:outline-none
+    aria-pressed:bg-primary/10 aria-pressed:text-primary;
+}
+
+/* Painel lateral que desliza da direita (<dialog>) */
+@utility sheet {
+  @apply m-0 ml-auto h-dvh max-h-dvh w-full max-w-xl bg-white p-0 text-slate-900 shadow-2xl backdrop:bg-slate-900/30 backdrop:backdrop-blur-xs
+    open:flex open:flex-col;
+}
